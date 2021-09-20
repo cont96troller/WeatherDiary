@@ -20,6 +20,7 @@
         app:layout_constraintTop_toTopOf="parent"/>
 
     <RadioGroup
+
         android:id="@+id/radio_group"
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -30,6 +31,8 @@
         app:layout_constraintTop_toBottomOf="@id/txt_title">
 
         <RadioButton
+            android:button="@null"
+            android:id="@+id/radio_weather"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -37,6 +40,8 @@
             android:text="현재날씨" />
 
         <RadioButton
+            android:button="@null"
+            android:id="@+id/radio_diary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -44,8 +49,9 @@
             android:text="일기목록" />
     </RadioGroup>
 
-    <androidx.viewpager2.widget.ViewPager2
-        android:layout_width="wrap_content"
+    <FrameLayout
+        android:id="@+id/framelayout"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="#990000"
         app:layout_constraintBottom_toBottomOf="parent"
