@@ -6,10 +6,12 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#0000FF"
+        android:background="#8383BA"
         android:gravity="center"
         android:text="날씨"
-        android:textSize="60sp" />
+        android:textSize="60sp"
+        android:textStyle="bold"
+        />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

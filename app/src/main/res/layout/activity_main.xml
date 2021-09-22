@@ -17,7 +17,7 @@
         android:textColor="#000000"
         android:textSize="17sp"
         android:textStyle="bold"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <RadioGroup
 
@@ -31,22 +31,27 @@
         app:layout_constraintTop_toBottomOf="@id/txt_title">
 
         <RadioButton
-            android:button="@null"
             android:id="@+id/radio_weather"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:buttonTint="@color/black"
             android:gravity="center"
-            android:text="현재날씨" />
+            android:text="현재날씨"
+            android:button="@null"
+            />
+
 
         <RadioButton
-            android:button="@null"
             android:id="@+id/radio_diary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:checked="true"
             android:gravity="center"
-            android:text="일기목록" />
+            android:text="일기목록"
+            android:button="@null"
+            />
     </RadioGroup>
 
     <FrameLayout
@@ -58,6 +63,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/radio_group" />
+
+    <Button
+        android:id="@+id/btn_write"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:layout_marginEnd="18dp"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+
+        />
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
