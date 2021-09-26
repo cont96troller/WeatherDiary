@@ -1,6 +1,8 @@
 package com.cont96roller.weatherdiary.model;
 
-public class DiaryModel {
+import java.io.Serializable;
+
+public class DiaryModel implements Serializable {
 
     private String weatherStatus;
     private String title;
@@ -16,6 +18,10 @@ public class DiaryModel {
     public DiaryModel(String weatherStatus, String title) {
         this.weatherStatus = weatherStatus;
         this.title = title;
+    }
+
+    public DiaryModel(String weatherStatus) {
+        this.weatherStatus = weatherStatus;
     }
 
     public String getWeatherStatus() {

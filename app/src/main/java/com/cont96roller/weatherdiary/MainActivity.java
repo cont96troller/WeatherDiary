@@ -18,11 +18,12 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.cont96roller.weatherdiary.interfaces.TestInterface;
 import com.cont96roller.weatherdiary.model.DiaryModel;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements TestInterface, View.OnClickListener {
 
     private RadioGroup mRadioGroup;
     private RadioButton mRadioWeather;
@@ -36,6 +37,18 @@ public class MainActivity extends AppCompatActivity {
     private View mView;
     /*중요*/
     private Context mContext;
+    private String mPersonName = "";
+    ArrayList<DiaryModel> mDiaryList = null;
+
+
+
+    public String getmPersonName() {
+        return mPersonName;
+    }
+
+    public void setmPersonName(String mPersonName) {
+        this.mPersonName = mPersonName;
+    }
 
     final public static String TAG = "pyorong";
 
@@ -46,16 +59,30 @@ public class MainActivity extends AppCompatActivity {
 
         mContext = this;
 
+//        mBtnMoveWrite = findViewById(R.id.btn_write);
+//        mBtnMoveWrite.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(mContext, WriteActivity.class);
+//                intent.putExtra("key", "명길아!");
+//                startActivity(intent);
+//                Toast.makeText(mContext, "명길 추워", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+
         mBtnMoveWrite = findViewById(R.id.btn_write);
-        mBtnMoveWrite.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(mContext, WriteActivity.class);
-                intent.putExtra("key", "명길아!");
-                startActivity(intent);
-                Toast.makeText(mContext, "명길 추워", Toast.LENGTH_SHORT).show();
-            }
-        });
+        mBtnMoveWrite.setOnClickListener(this);
+//        mBtnMoveWrite.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(mContext, WriteActivity.class);
+//                intent.putExtra("key2", "명길아!");
+//                startActivity(intent);
+//                Toast.makeText(mContext, "명길 추워", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+
+
 
 
         DiaryModel diaryModel;
@@ -90,7 +117,6 @@ public class MainActivity extends AppCompatActivity {
 
                 Log.e(TAG, "선택된값 : " + i);
                 mFragmentTransaction = mFragmentManager.beginTransaction();
-
 
 
                 if (i == R.id.radio_weather) {
@@ -137,4 +163,23 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void testMkMk() {
+
+    }
+
+    @Override
+    public void onClick(View view) {
+
+        switch(view.getId()) {
+            case R.id.btn_write: Intent intent = new Intent(mContext, WriteActivity.class);
+                intent.putExtra("key2", "명길아!");
+                startActivity(intent);
+                Toast.makeText(mContext, "명길 추워", Toast.LENGTH_SHORT).show();
+                break;
+
+
+        }
+
+    }
 }

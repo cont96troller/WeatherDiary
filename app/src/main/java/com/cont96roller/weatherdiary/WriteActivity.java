@@ -11,6 +11,8 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.cont96roller.weatherdiary.model.DiaryModel;
+
 public class WriteActivity extends AppCompatActivity {
 
     private Button mButton2;
@@ -24,12 +26,15 @@ public class WriteActivity extends AppCompatActivity {
         setContentView(R.layout.activity_write);
         mContext = this;
 
+
         Intent intent = null;
         intent = getIntent();
-        String value = null;
-        value = intent.getStringExtra("key");
-        Toast toast = Toast.makeText(mContext, value, Toast.LENGTH_SHORT);
-        toast.show();
+        if (intent.hasExtra("key")) {
+            DiaryModel value = null;
+            value = (DiaryModel) intent.getSerializableExtra("key");
+            Toast toast = Toast.makeText(mContext, value.getWeatherStatus(), Toast.LENGTH_SHORT);
+            toast.show();
+        }
 
 
         mButton2 = findViewById(R.id.btn_ok);
