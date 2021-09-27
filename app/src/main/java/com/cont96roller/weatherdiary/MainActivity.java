@@ -106,8 +106,8 @@ public class MainActivity extends AppCompatActivity implements TestInterface, Vi
 
         mFragmentManager = getSupportFragmentManager();
 
-        mFragmentTransaction = mFragmentManager.beginTransaction();
-        mFragmentTransaction.replace(R.id.framelayout, mWeatherFragment).commitAllowingStateLoss();
+//        mFragmentTransaction = mFragmentManager.beginTransaction();
+//        mFragmentTransaction.replace(R.id.framelayout, mWeatherFragment).commitAllowingStateLoss();
 
 
         mRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -134,7 +134,7 @@ public class MainActivity extends AppCompatActivity implements TestInterface, Vi
 
             }
         });
-
+        mRadioWeather.setChecked(true);
         Log.d(TAG, "onCreate");
     }
 

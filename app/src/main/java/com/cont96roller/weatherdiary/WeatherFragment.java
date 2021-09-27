@@ -5,15 +5,16 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.bumptech.glide.Glide;
 import com.cont96roller.weatherdiary.model.ApiInterface;
-import com.cont96roller.weatherdiary.model.DiaryModel;
-import com.cont96roller.weatherdiary.model.Repo;
+import com.cont96roller.weatherdiary.model.ResponseWeather;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -30,6 +31,7 @@ public class WeatherFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         mContext = getContext();
+        View view = inflater.inflate(R.layout.fragment_weather, container, false);
 
         String lat= "37.65171906925866";
         String lot = "127.07728375544342";
@@ -37,12 +39,49 @@ public class WeatherFragment extends Fragment {
         Retrofit client = new Retrofit.Builder().baseUrl("http://api.openweathermap.org").addConverterFactory(GsonConverterFactory.create()).build();
 
         ApiInterface service = client.create(ApiInterface.class);
-        Call<Repo> call = service.requestWeather("d36d81339b59c0868af503708d9057b8", Double.valueOf(lat), Double.valueOf(lot));
-        call.enqueue(new Callback<Repo>() {
+        Call<ResponseWeather> call = service.requestWeather("d36d81339b59c0868af503708d9057b8", Double.valueOf(lat), Double.valueOf(lot));
+        call.enqueue(new Callback<ResponseWeather>() {
             @Override
-            public void onResponse(Response<Repo> response) {
+            public void onResponse(Response<ResponseWeather> response) {
                 if (response.isSuccess()) {
-                    Repo repo = response.body();
+                    ResponseWeather responseWeather = response.body();
+                    String main = response.body().getWeather().get(0).getMain();
+                    TextView textview = view.findViewById(R.id.txt_weather_status);
+                    textview.setText(main);
+                    //response에있는 main을 가져온다.
+                    //xml에 textview 변수로 선언해주고
+                    //id를 가져온다
+                    //선언해준 textview에 main을 넣어준다.
+
+                    //1. xml에 ImageView만들고d 위치잡고 id부여
+                    //2. gilde사용
+                    //3. ImageView 변수로 선언
+                    //4. id 가져오고
+                    //5. 선언해준 ImageView에 ico_back_nor.png 넣어준다.
+                    //6. 선언해준 ImageView에 https://openweathermap.org/img/w/04n.png 넣어준다.
+                    //7. icon을 선언해주고 String
+                    //8. icon에 icon값을담아 url경로를 만들어준다. ""
+
+                    ImageView imageView = view.findViewById(R.id.imageView);
+//                    imageView.setImageResource(R.drawable.ico_back_nor);
+
+                    String icon;
+                    icon = response.body().getWeather().get(0).getIcon();
+
+                    String url = "https://openweathermap.org/img/w/" + icon + ".png";
+
+                    Glide.with(mContext)
+
+//                            .load("https://openweathermap.org/img/w/04n.png")
+                            .load(url)
+
+//                            .load(R.drawable.ico_back_nor)
+                            .into(imageView);
+
+
+
+
+//                            .error(R.drawable.imagenotfound);
 
 //                    tem.setText(String.valueOf(repo.getMain().getTemp()));
                 } else {
@@ -78,6 +117,6 @@ public class WeatherFragment extends Fragment {
 
 
 
-        return inflater.inflate(R.layout.fragment_weather, container, false);
+        return view;
     }
 }
