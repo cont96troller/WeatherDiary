@@ -1,5 +1,7 @@
 package com.cont96roller.weatherdiary.adapter;
 
+import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,20 +9,28 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.cont96roller.weatherdiary.Diary;
 import com.cont96roller.weatherdiary.MainActivity;
 import com.cont96roller.weatherdiary.R;
+import com.cont96roller.weatherdiary.ShowDiaryActivity;
 import com.cont96roller.weatherdiary.model.DiaryModel;
 
-import java.util.ArrayList;
+import java.io.Serializable;
+import java.util.List;
 
-public class DiaryAdapter extends RecyclerView.Adapter<DiaryAdapter.DiaryViewHolder> {
+public class DiaryAdapter extends RecyclerView.Adapter<DiaryAdapter.DiaryViewHolder> implements Serializable {
 
-    ArrayList<DiaryModel> mDiaryList = null;
+    private Context mContext;
+
+
+    List<Diary> mDiaryList = null;
     final private static String TAG = "pyorong";
 
-    public DiaryAdapter(ArrayList<DiaryModel> mDiaryList) {
+
+    public DiaryAdapter(List<Diary> mDiaryList) {
         this.mDiaryList = mDiaryList;
     }
 
@@ -40,12 +50,50 @@ public class DiaryAdapter extends RecyclerView.Adapter<DiaryAdapter.DiaryViewHol
     public void onBindViewHolder(@NonNull DiaryViewHolder holder, int position) {
 //        Item이 하나씩 그려질 때 마다 호출됨
         Log.e(MainActivity.TAG, "동희" + position);
-        DiaryModel model = mDiaryList.get(position);
+        Diary dairy = mDiaryList.get(position);
+
+        mContext = holder.mConstList.getContext();
+
+//        holder.mTxtWeather.setText(dairy.getgetWeatherStatus());
+        holder.mTxtTitle.setText(dairy.getContents());
+//        holder.mTxtDate.setText(dairy.getDate());
+//        holder.mConstList.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(mContext, WriteActivity.class);
+//                intent.putExtra("key", holder.getAdapterPosition());
+////                Toast.makeText(mContext, String.valueOf(position), Toast.LENGTH_SHORT).show();
+//                mContext.startActivity(intent);
+//            }
+//        });
 
 
-        holder.mWeather.setText(model.getWeatherStatus());
-        holder.mTitle.setText(model.getTitle());
-        holder.mDate.setText(model.getDate());
+
+
+
+        mContext = holder.mConstList.getContext();
+
+        holder.mConstList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(mContext, ShowDiaryActivity.class);
+                intent.putExtra("key2", "일기조회하기");
+
+
+//                Toast.makeText(mContext, String.valueOf(position), Toast.LENGTH_SHORT).show();
+                mContext.startActivity(intent);
+
+                switch(view.getId()) {
+
+
+
+                }
+            }
+        });
+
+
+
     }
 
     @Override
@@ -54,16 +102,19 @@ public class DiaryAdapter extends RecyclerView.Adapter<DiaryAdapter.DiaryViewHol
     }
 
     class DiaryViewHolder extends RecyclerView.ViewHolder {
-        protected TextView mWeather;
-        protected TextView mTitle;
-        protected TextView mDate;
+        protected TextView mTxtWeather;
+        protected TextView mTxtTitle;
+        protected TextView mTxtDate;
+        protected ConstraintLayout mConstList;
 
         public DiaryViewHolder(@NonNull View itemView) {
             super(itemView);
-            this.mWeather = itemView.findViewById(R.id.txt_weather);
-            this.mTitle = itemView.findViewById(R.id.title);
-            this.mDate = itemView.findViewById(R.id.date);
+            this.mTxtWeather = itemView.findViewById(R.id.txt_weather);
+            this.mTxtTitle = itemView.findViewById(R.id.title);
+            this.mTxtDate = itemView.findViewById(R.id.date);
+            this.mConstList = itemView.findViewById(R.id.const_list);
 
         }
     }
+
 }
