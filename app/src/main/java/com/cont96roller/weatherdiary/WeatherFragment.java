@@ -1,7 +1,12 @@
 package com.cont96roller.weatherdiary;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +15,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
@@ -25,21 +31,42 @@ import retrofit2.Retrofit;
 public class WeatherFragment extends Fragment {
 
     private Context mContext;
+    private LocationManager locationManager;
+    private static final int REQUEST_CODE_LOCATION = 2;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        //사용자의 위치 수신을 위한 세팅
+        locationManager = (LocationManager) getContext().getSystemService((Context.LOCATION_SERVICE));
+        //사용자의 현재 위치
+        Location userLocation = getMyLocation();
+        if (userLocation != null) {
+            double latitude = userLocation.getLatitude();
+            double longitude = userLocation.getLongitude();
+//            userVO.setLat(latitude);
+//            userVO.setLon(longitude);
+        }
+
+//        Location currentLocation = null;
+//        String locationProvider = LocationManager.GPS_PROVIDER;
+//        currentLocation = locationManager.getLastKnownLocation(locationProvider);
+////        if (currentLocation != null) {
+//        double lng = currentLocation.getLongitude();
+//        double lat = currentLocation.getLatitude();
 
         mContext = getContext();
-        View view = inflater.inflate(R.layout.fragment_weather, container, false);
+        View view = inflater.inflate(R.layout.fragment_weather, container, false);//외우는거: fragment xml과 이어주기 위해 필요한거
 
         String lat= "37.65171906925866";
-        String lot = "127.07728375544342";
+        String lng = "127.07728375544342";
 
         Retrofit client = new Retrofit.Builder().baseUrl("http://api.openweathermap.org").addConverterFactory(GsonConverterFactory.create()).build();
 
         ApiInterface service = client.create(ApiInterface.class);
-        Call<ResponseWeather> call = service.requestWeather("d36d81339b59c0868af503708d9057b8", Double.valueOf(lat), Double.valueOf(lot));
+        Call<ResponseWeather> call = service.requestWeather("d36d81339b59c0868af503708d9057b8", Double.valueOf(lat), Double.valueOf(lng));
+//        Call<ResponseWeather> call = service.requestWeather("d36d81339b59c0868af503708d9057b8", Double.valueOf(userLocation.getLatitude()), Double.valueOf(userLocation.getLongitude()));
+
         call.enqueue(new Callback<ResponseWeather>() {
             @Override
             public void onResponse(Response<ResponseWeather> response) {
@@ -79,8 +106,6 @@ public class WeatherFragment extends Fragment {
                             .into(imageView);
 
 
-
-
 //                            .error(R.drawable.imagenotfound);
 
 //                    tem.setText(String.valueOf(repo.getMain().getTemp()));
@@ -115,8 +140,27 @@ public class WeatherFragment extends Fragment {
 //        Toast.makeText(mContext, testClass1.kang(), Toast.LENGTH_SHORT).show();
 
 
-
-
         return view;
     }
+
+    private Location getMyLocation() {
+
+        Location currentLocation = null;
+        // Register the listener with the Location Manager to receive location updates
+        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, this.REQUEST_CODE_LOCATION);
+            getMyLocation();
+        }
+        else {
+            // 수동으로 위치 구하기
+            String locationProvider = LocationManager.PASSIVE_PROVIDER;
+            currentLocation = locationManager.getLastKnownLocation(locationProvider);
+            if (currentLocation != null) {
+                double lng = currentLocation.getLongitude();
+                double lat = currentLocation.getLatitude();
+            }
+        }
+        return currentLocation;
+    }
 }
+

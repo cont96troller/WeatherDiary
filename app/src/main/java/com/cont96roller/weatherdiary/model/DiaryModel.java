@@ -20,6 +20,7 @@ public class DiaryModel implements Serializable {
         this.title = title;
     }
 
+
     public DiaryModel(String weatherStatus) {
         this.weatherStatus = weatherStatus;
     }

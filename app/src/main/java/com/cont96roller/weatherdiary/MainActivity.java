@@ -11,6 +11,8 @@ import android.util.Log;
 
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.View;
 import android.widget.Button;
@@ -18,10 +20,12 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.cont96roller.weatherdiary.adapter.DiaryAdapter;
 import com.cont96roller.weatherdiary.interfaces.TestInterface;
 import com.cont96roller.weatherdiary.model.DiaryModel;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements TestInterface, View.OnClickListener {
 
@@ -35,11 +39,16 @@ public class MainActivity extends AppCompatActivity implements TestInterface, Vi
     private Button mBtnMoveWrite;
     private Button mButton2;
     private View mView;
-    /*중요*/
+    private Button btn_bgm;
     private Context mContext;
     private String mPersonName = "";
-    ArrayList<DiaryModel> mDiaryList = null;
+   List<Diary> mDiaryList = null;
 
+    List<Diary> diaryList;
+    private DiaryDB diaryDB = null;
+    private DiaryAdapter diaryAdater;
+    private Button mWriteButton;
+    private RecyclerView mRecyclerView;
 
 
     public String getmPersonName() {
@@ -58,6 +67,56 @@ public class MainActivity extends AppCompatActivity implements TestInterface, Vi
         setContentView(R.layout.activity_main);
 
         mContext = this;
+        mWriteButton = findViewById(R.id.btn_write);
+
+        mContext = getApplicationContext();
+        diaryAdater = new DiaryAdapter(mDiaryList);
+
+
+        //DB 생성
+        diaryDB = DiaryDB.getInstance(this);
+
+        class InsertRunnable implements Runnable {
+
+
+            @Override
+            public void run() {
+                try {
+                    diaryList = DiaryDB.getInstance(mContext).diaryDao().getAll();
+                    diaryAdater = new DiaryAdapter(mDiaryList);
+                    diaryAdater.notifyDataSetChanged();
+//                    String title = diaryList.get(0).contents;
+                    mRecyclerView.setAdapter(diaryAdater);
+                    LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(mContext, RecyclerView.VERTICAL, false);
+                    mRecyclerView.setLayoutManager(mLinearLayoutManager);
+                } catch (Exception e) {
+
+                }
+
+            }
+        }
+        InsertRunnable insertRunnable = new InsertRunnable();
+        Thread t = new Thread(insertRunnable);
+        t.start();
+
+        mWriteButton.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(), WriteActivity.class);
+            startActivity(intent);
+            finish();
+        });
+
+
+
+
+        btn_bgm = findViewById(R.id.btn_bgm);
+
+        btn_bgm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startService(new Intent(getApplicationContext(), MusicService.class));
+
+            }
+        });
 
 //        mBtnMoveWrite = findViewById(R.id.btn_write);
 //        mBtnMoveWrite.setOnClickListener(new View.OnClickListener() {
@@ -70,8 +129,8 @@ public class MainActivity extends AppCompatActivity implements TestInterface, Vi
 //            }
 //        });
 
-        mBtnMoveWrite = findViewById(R.id.btn_write);
-        mBtnMoveWrite.setOnClickListener(this);
+//        mBtnMoveWrite = findViewById(R.id.btn_write);
+//        mBtnMoveWrite.setOnClickListener(this);
 //        mBtnMoveWrite.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
@@ -173,7 +232,7 @@ public class MainActivity extends AppCompatActivity implements TestInterface, Vi
 
         switch(view.getId()) {
             case R.id.btn_write: Intent intent = new Intent(mContext, WriteActivity.class);
-                intent.putExtra("key2", "명길아!");
+                intent.putExtra("key2", "일기작성하기");
                 startActivity(intent);
                 Toast.makeText(mContext, "명길 추워", Toast.LENGTH_SHORT).show();
                 break;
