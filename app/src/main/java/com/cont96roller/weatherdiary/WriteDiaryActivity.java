@@ -1,6 +1,7 @@
 package com.cont96roller.weatherdiary;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -42,6 +43,12 @@ public class WriteDiaryActivity extends AppCompatActivity implements View.OnClic
     private String mIcon;
     private int mTemp_max;
     private int mTemp_min;
+    private TextView mTxtWeatherStatus;
+    private TextView mTxtTemperature;
+    private ImageView mImgWeather;
+    private TextView mTxtTitle;
+    private Diary mDiary;
+    private boolean mIsEditMode;
 
 
     @Override
@@ -49,13 +56,41 @@ public class WriteDiaryActivity extends AppCompatActivity implements View.OnClic
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_write_diary);
         mContext = this;
-
         initView();
-        getWeatherInfo();
+
+        Intent intent = getIntent();
+        mIsEditMode = intent.getBooleanExtra("key_isEditMode", false);
+        if(mIsEditMode == true) {
+
+            mDiary = (Diary) intent.getSerializableExtra("key_diary");
+            mTxtWeatherStatus.setText(mDiary.getStatus());
+            String tempFormat = "%1s°C / %2s°C";
+            String tempMin = String.valueOf(mDiary.getTemp_min() - 274);
+            String tempMax = String.valueOf(mDiary.getTemp_max() - 274);
+            String temperature = String.format(tempFormat, tempMin, tempMax);
+            mTxtTemperature.setText(temperature);
+            String url = Constants.PREFIX_WEATHER_ICON_URL + mDiary.getIcon() + Constants.SUFFIX_WEATHER_ICON_URL;
+            Glide.with(mContext)
+                    .load(url)
+                    .into(mImgWeather);
+            mTxtTitle.setText("일기수정하기");
+            mEditTitle.setText(mDiary.getTitle());
+            mEditTextContents.setText(mDiary.getContents());
+
+        } else {
+            getWeatherInfo();
+        }
+
+
+
 
     }
 
     private void initView() {
+        mTxtTitle = findViewById(R.id.txt_title);
+        mTxtWeatherStatus = findViewById(R.id.txt_weather_status);
+        mTxtTemperature = findViewById(R.id.txt_temp);
+        mImgWeather = findViewById(R.id.img_weather);
         mBtnBack = findViewById(R.id.btn_back);
         mEditTextContents = findViewById(R.id.edit_diary_contents);
         mEditTitle = findViewById(R.id.edit_diary_title);
@@ -89,9 +124,7 @@ public class WriteDiaryActivity extends AppCompatActivity implements View.OnClic
             public void onResponse(Response<ResponseWeather> response) {
                 if (response.isSuccess()) {
 
-                    TextView txtWeatherStatus = findViewById(R.id.txt_weather_status);
-                    TextView txtTemperature = findViewById(R.id.txt_temp);
-                    ImageView imgWeather = findViewById(R.id.img_weather);
+
 
                     ResponseWeather responseWeather = response.body();
                     String main = responseWeather.getWeather().get(0).getMain();
@@ -111,13 +144,13 @@ public class WriteDiaryActivity extends AppCompatActivity implements View.OnClic
                     String tempMax = String.valueOf(tempMaxInt - 274);
                     String temperature = String.format(tempFormat, tempMin, tempMax);
 
-                    txtWeatherStatus.setText(main);
-                    txtTemperature.setText(temperature);
+                    mTxtWeatherStatus.setText(main);
+                    mTxtTemperature.setText(temperature);
 
 
                     Glide.with(mContext)
                             .load(url)
-                            .into(imgWeather);
+                            .into(mImgWeather);
                 }
             }
 
@@ -157,22 +190,27 @@ public class WriteDiaryActivity extends AppCompatActivity implements View.OnClic
 
         @Override
         public void run() {
+            if(mIsEditMode == true) {
+                mDiary.setTitle(mEditTitle.getText().toString());
+                mDiary.setContents(mEditTextContents.getText().toString());
+                DiaryDB.getInstance(mContext).diaryDao().updateDiary(mDiary);
 
-            Long now = System.currentTimeMillis();
-            Date date = new Date(now);
+            } else {
+                Long now = System.currentTimeMillis();
+                Date date = new Date(now);
 
-            Diary diary = new Diary();
-            diary.contents = mEditTextContents.getText().toString();
-            diary.title = mEditTitle.getText().toString();
-//            diary.temp_max = mTxtTempMax.getText().toString();
-//            diary.temp_min = mTxtTempMin.getText().toString();
-            diary.status = mWeatherStatus;
-            diary.icon = mIcon;
-            diary.temp_max = mTemp_max;
-            diary.temp_min = mTemp_min;
-            diary.date = date.getTime();
+                Diary diary = new Diary();
+                diary.contents = mEditTextContents.getText().toString();
+                diary.title = mEditTitle.getText().toString();
+                diary.status = mWeatherStatus;
+                diary.icon = mIcon;
+                diary.temp_max = mTemp_max;
+                diary.temp_min = mTemp_min;
+                diary.date = date.getTime();
 
-            DiaryDB.getInstance(mContext).diaryDao().insertAll(diary);
+                DiaryDB.getInstance(mContext).diaryDao().insertAll(diary);
+            }
+
         }
     }
 

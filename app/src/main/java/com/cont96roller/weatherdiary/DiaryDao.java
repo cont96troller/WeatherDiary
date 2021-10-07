@@ -4,6 +4,7 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import java.util.List;
 
@@ -17,6 +18,9 @@ public interface DiaryDao {
 
     @Insert
     void insertAll(Diary... diaries);
+
+    @Update
+    void updateDiary(Diary diary);
 
     @Delete
     void delete(Diary diary);

@@ -2,8 +2,6 @@ package com.cont96roller.weatherdiary;
 
 import static com.cont96roller.weatherdiary.common.Constants.DIARY_ID_KEY;
 
-import static java.lang.System.load;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,22 +14,9 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.cont96roller.weatherdiary.adapter.DiaryAdapter;
 import com.cont96roller.weatherdiary.common.Constants;
-import com.cont96roller.weatherdiary.model.ApiInterface;
-import com.cont96roller.weatherdiary.model.ResponseWeather;
-
-import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.GsonConverterFactory;
-import retrofit2.Response;
-import retrofit2.Retrofit;
 
 
 public class ShowDiaryActivity extends AppCompatActivity implements View.OnClickListener {
@@ -118,13 +103,17 @@ public class ShowDiaryActivity extends AppCompatActivity implements View.OnClick
 
             case R.id.img_btn_edit:
                 Toast.makeText(mContext, "수정 버튼 선택", Toast.LENGTH_SHORT).show();
-//                Intent intent = new Intent(mContext, WriteDiaryActivity.class);
-//                boolean isForEdit = true;
-//                intent.putExtra
-//                startActivity(intent);
+                Intent intent = new Intent(mContext, WriteDiaryActivity.class);
+                boolean isEditMode = true;
+                intent.putExtra("key_isEditMode", isEditMode);
+                intent.putExtra("key_diary", mDiary);
+                startActivity(intent);
                 break;
 
             case R.id.img_btn_delete:
+                Intent broadcastIntent = new Intent();
+                broadcastIntent.setAction(Constants.ACTION_DELETE_DIARY);
+                sendBroadcast(broadcastIntent);
 
                 Diary diary = new Diary();
                 int diaryId = getIntent().getIntExtra(DIARY_ID_KEY, 0);

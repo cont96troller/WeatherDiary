@@ -1,7 +1,10 @@
 package com.cont96roller.weatherdiary;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.media.session.PlaybackState;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,20 +18,20 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cont96roller.weatherdiary.adapter.DiaryAdapter;
-import com.cont96roller.weatherdiary.model.DiaryModel;
+import com.cont96roller.weatherdiary.common.Constants;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class DiaryFragment extends Fragment {
 
-//    List<DiaryModel> mDiaryList = new ArrayList<>();
+    //    List<DiaryModel> mDiaryList = new ArrayList<>();
     DiaryAdapter mAdapter;
     private Context mContext;
     private RecyclerView mRecyclerView;
     private DiaryDB diaryDB = null;
     List<Diary> diaryList;
     private DiaryAdapter diaryAdater;
+    private DeleteReceiver mReceiver;
 
     @Nullable
     @Override
@@ -49,9 +52,12 @@ public class DiaryFragment extends Fragment {
         });
 
 
-        addDiaryModel();
+        getDiaryList();
         initView(view);
-
+        mReceiver = new DeleteReceiver();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(Constants.ACTION_DELETE_DIARY);
+        getActivity().registerReceiver(mReceiver, filter);
 
         return view;
     }
@@ -65,7 +71,7 @@ public class DiaryFragment extends Fragment {
         mRecyclerView.setAdapter(mAdapter);
     }
 
-    public void addDiaryModel() {
+    public void getDiaryList() {
 
 
         diaryList = DiaryDB.getInstance(mContext).diaryDao().getAll();
@@ -114,6 +120,23 @@ public class DiaryFragment extends Fragment {
         }
     }
 
+    public class DeleteReceiver extends BroadcastReceiver {
+
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String intentAction = intent.getAction();
+            if (intentAction != null) {
+                switch (intentAction) {
+                    case Constants
+                            .ACTION_DELETE_DIARY:
+                        getDiaryList();
+                        break;
+
+                }
+            }
+        }
+    }
 
 }
 

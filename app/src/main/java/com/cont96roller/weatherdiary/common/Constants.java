@@ -6,4 +6,5 @@ public class Constants {
     public static final String PREFIX_WEATHER_ICON_URL = "https://openweathermap.org/img/w/";
     public static final String SUFFIX_WEATHER_ICON_URL = ".png";
     public static final String DIARY_ID_KEY = "diary_id";
+    public static final String ACTION_DELETE_DIARY = "com.cont96roller.weatherdiary.DELETE_DIARY";
 }
