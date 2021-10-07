@@ -41,7 +41,7 @@ public class DiaryFragment extends Fragment {
         mRecyclerView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(mContext, WriteActivity.class);
+                Intent intent = new Intent(mContext, WriteDiaryActivity.class);
                 intent.putExtra("key2", "일기조회하기");
                 startActivity(intent);
                 Toast.makeText(mContext, "1", Toast.LENGTH_SHORT).show();
@@ -69,13 +69,16 @@ public class DiaryFragment extends Fragment {
 
 
         diaryList = DiaryDB.getInstance(mContext).diaryDao().getAll();
-        String title = diaryList.get(0).contents;
+
+//        String title = diaryList.get(0).contents;
+//        long date = diaryList.get(0).date;
+
         InsertRunnable insertRunnable = new InsertRunnable();
         Thread t = new Thread(insertRunnable);
         t.start();
 //        diaryList.clear();
 //        diaryList.add(new Diary(title));/
-//        diaryList.add(new DiaryModel(title, "춥다", "2021.08.21"));
+//        diaryList.add(new Diary());
 //        diaryList.add(new DiaryModel("비가오는", "싸늘", "2021.07.21"));
 //        diaryList.add(new DiaryModel("날이더운", "더운", "2021.06.21"));
 

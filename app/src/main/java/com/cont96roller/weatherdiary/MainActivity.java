@@ -67,6 +67,8 @@ public class MainActivity extends AppCompatActivity implements TestInterface, Vi
         setContentView(R.layout.activity_main);
 
         mContext = this;
+
+
         mWriteButton = findViewById(R.id.btn_write);
 
         mContext = getApplicationContext();
@@ -100,7 +102,7 @@ public class MainActivity extends AppCompatActivity implements TestInterface, Vi
         t.start();
 
         mWriteButton.setOnClickListener(v -> {
-            Intent intent = new Intent(getApplicationContext(), WriteActivity.class);
+            Intent intent = new Intent(getApplicationContext(), WriteDiaryActivity.class);
             startActivity(intent);
             finish();
         });
@@ -146,15 +148,15 @@ public class MainActivity extends AppCompatActivity implements TestInterface, Vi
 
         DiaryModel diaryModel;
         DiaryModel diaryModel2;
-        diaryModel = new DiaryModel("맑음", "이것은 제목", "2021.09.21");
-        diaryModel2 = new DiaryModel("흐림", "이것은 제목2", "2021.09.22");
+        diaryModel = new DiaryModel("맑음", "이것은 제목", 0L);
+        diaryModel2 = new DiaryModel("흐림", "이것은 제목2", 0L);
         ArrayList<DiaryModel> diaryList = new ArrayList<>();
 //        diaryList.add("맑음");
 //        diaryList.add("이것은 제목");
 //        diaryList.add("2021.09.21");
         diaryList.add(diaryModel);
         diaryList.add(diaryModel2);
-        diaryList.add(new DiaryModel("바람많은", "춥다", "2021.08.21"));
+        diaryList.add(new DiaryModel("바람많은", "춥다", 0L));
 
 
         mRadioGroup = findViewById(R.id.radio_group);
@@ -231,7 +233,7 @@ public class MainActivity extends AppCompatActivity implements TestInterface, Vi
     public void onClick(View view) {
 
         switch(view.getId()) {
-            case R.id.btn_write: Intent intent = new Intent(mContext, WriteActivity.class);
+            case R.id.btn_write: Intent intent = new Intent(mContext, WriteDiaryActivity.class);
                 intent.putExtra("key2", "일기작성하기");
                 startActivity(intent);
                 Toast.makeText(mContext, "명길 추워", Toast.LENGTH_SHORT).show();

@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/title"
+        style="@style/txt_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="일기수정하기"
+        app:layout_constraintBottom_toBottomOf="@id/btn_back"
+        app:layout_constraintStart_toEndOf="@id/btn_back"
+        app:layout_constraintTop_toTopOf="@id/btn_back" />
+
+    <Button
+        android:id="@+id/btn_back"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:background="@drawable/ico_back_nor"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/img_btn_edit"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:layout_marginEnd="13dp"
+        android:text="등록"
+        app:layout_constraintBottom_toBottomOf="@id/btn_back"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/btn_back" />
+
+    <ImageView
+        android:id="@+id/img_weather"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="13dp"
+        android:layout_marginBottom="13dp"
+        app:layout_constraintBottom_toTopOf="@id/edit_diary_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/txt_temp"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toEndOf="@+id/btn_back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title"
+        app:layout_constraintVertical_bias="0.151"
+        tools:srcCompat="@drawable/icon_sunny" />
+
+    <TextView
+        android:id="@+id/txt_weather_status"
+        style="@style/txt_weather_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="날씨자리"
+        app:layout_constraintBottom_toTopOf="@+id/txt_temp"
+        app:layout_constraintEnd_toEndOf="@id/txt_temp"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@id/txt_temp"
+        app:layout_constraintTop_toTopOf="@+id/img_weather"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier_img"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        app:barrierDirection="end"
+        app:constraint_referenced_ids="img_weather"
+        app:layout_constraintEnd_toStartOf="@id/txt_weather_status"
+        app:layout_constraintStart_toEndOf="@id/img_weather" />
+
+    <TextView
+        android:id="@+id/txt_temp"
+        style="@style/txt_temp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="4dp"
+        android:text="21°C / 28°C"
+        app:layout_constraintBottom_toBottomOf="@+id/img_weather"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/img_weather"
+        app:layout_constraintTop_toBottomOf="@+id/txt_weather_status" />
+
+    <TextView
+        android:id="@+id/edit_diary_title"
+        style="@style/txt_diary_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="18dp"
+        android:layout_marginVertical="20dp"
+        android:text="일기 제목"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/img_weather" />
+
+    <ImageView
+        android:id="@+id/view_dotted_line"
+        android:layout_width="0dp"
+        android:layout_height="3dp"
+        android:layout_marginVertical="4dp"
+        android:background="@drawable/shape_dotted"
+        android:layerType="software"
+        app:layout_constraintEnd_toEndOf="@id/edit_diary_title"
+        app:layout_constraintStart_toStartOf="@id/edit_diary_title"
+        app:layout_constraintTop_toBottomOf="@id/edit_diary_title" />
+
+
+    <TextView
+        android:id="@+id/edit_diary_contents"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginHorizontal="18dp"
+        android:layout_marginBottom="20dp"
+        android:gravity="left"
+        android:paddingHorizontal="8dp"
+        android:paddingVertical="10dp"
+        android:text="testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest"
+        android:textColor="#000000"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/view_dotted_line" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

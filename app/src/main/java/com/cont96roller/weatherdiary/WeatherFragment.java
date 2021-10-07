@@ -28,6 +28,7 @@ import retrofit2.GsonConverterFactory;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
+//날씨 표시
 public class WeatherFragment extends Fragment {
 
     private Context mContext;
