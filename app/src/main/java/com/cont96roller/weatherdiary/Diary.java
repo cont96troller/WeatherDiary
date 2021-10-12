@@ -15,7 +15,7 @@ public class Diary implements Serializable {
     public String title;
 
     @ColumnInfo(name="date")
-    public long date;
+    public String date;
 
     @ColumnInfo(name="status")
     public String status;
@@ -49,11 +49,11 @@ public class Diary implements Serializable {
         this.title = title;
     }
 
-    public long getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(long date) {
+    public void setDate(String date) {
         this.date = date;
     }
 

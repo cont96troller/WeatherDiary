@@ -32,6 +32,7 @@ public class DiaryFragment extends Fragment {
     List<Diary> diaryList;
     private DiaryAdapter diaryAdater;
     private DeleteReceiver mReceiver;
+    private EditReceiver mEditReceiver;
 
     @Nullable
     @Override
@@ -47,17 +48,24 @@ public class DiaryFragment extends Fragment {
                 Intent intent = new Intent(mContext, WriteDiaryActivity.class);
                 intent.putExtra("key2", "일기조회하기");
                 startActivity(intent);
-                Toast.makeText(mContext, "1", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(mContext, "1", Toast.LENGTH_SHORT).show();
             }
         });
 
 
         getDiaryList();
         initView(view);
+
         mReceiver = new DeleteReceiver();
         IntentFilter filter = new IntentFilter();
         filter.addAction(Constants.ACTION_DELETE_DIARY);
+        filter.addAction(Constants.ACTION_EDIT_DIARY);
         getActivity().registerReceiver(mReceiver, filter);
+
+        mEditReceiver = new EditReceiver();
+        IntentFilter editFilter = new IntentFilter();
+        editFilter.addAction(Constants.ACTION_EDIT_DIARY);
+        getActivity().registerReceiver(mEditReceiver, filter);
 
         return view;
     }
@@ -120,6 +128,18 @@ public class DiaryFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if(mReceiver != null) {
+            getActivity().unregisterReceiver(mReceiver);
+        }
+
+        if(mEditReceiver != null) {
+            getActivity().unregisterReceiver(mEditReceiver);
+        }
+    }
+
     public class DeleteReceiver extends BroadcastReceiver {
 
 
@@ -136,6 +156,25 @@ public class DiaryFragment extends Fragment {
                 }
             }
         }
+    }
+
+    public class EditReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String intentAction = intent.getAction();
+            if(intentAction != null) {
+                switch (intentAction) {
+                    case Constants
+                            .ACTION_EDIT_DIARY:
+                        getDiaryList();
+                        break;
+                }
+            }
+
+        }
+
+
     }
 
 }

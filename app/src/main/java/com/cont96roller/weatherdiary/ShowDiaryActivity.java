@@ -33,6 +33,7 @@ public class ShowDiaryActivity extends AppCompatActivity implements View.OnClick
     private Context mContext;
     private DiaryDao mDiaryDao;
     private Diary mDiary;
+    private TextView mTxtDate;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,6 +54,7 @@ public class ShowDiaryActivity extends AppCompatActivity implements View.OnClick
     }
 
     private void initView() {
+        mTxtDate = findViewById(R.id.txt_date);
         mBtnBack = findViewById(R.id.btn_back);
         mBtnEdit = findViewById(R.id.img_btn_edit);
         mBtnDelete = findViewById(R.id.img_btn_delete);
@@ -77,7 +79,10 @@ public class ShowDiaryActivity extends AppCompatActivity implements View.OnClick
 
         mTxtDiaryTitle.setText(mDiary.getTitle());
         mTxtDiaryContents.setText(mDiary.getContents());
-
+        String date = String.valueOf(mDiary.getDate());
+//        mTxtTemperature.setText();
+//        holder.mTxtDate.setText(String.valueOf(diary.getDate()));
+        mTxtDate.setText(String.valueOf(mDiary.getDate()));
 
         setOnClicks();
     }
@@ -108,6 +113,11 @@ public class ShowDiaryActivity extends AppCompatActivity implements View.OnClick
                 intent.putExtra("key_isEditMode", isEditMode);
                 intent.putExtra("key_diary", mDiary);
                 startActivity(intent);
+                finish();
+
+//                Intent editBroadcastIntent = new Intent();
+//                editBroadcastIntent.setAction(Constants.ACTION_EDIT_DIARY);
+//                sendBroadcast(editBroadcastIntent);
                 break;
 
             case R.id.img_btn_delete:
@@ -122,7 +132,7 @@ public class ShowDiaryActivity extends AppCompatActivity implements View.OnClick
 //                diary.setId(0);
 //                mDiaryDao.delete(diary);
 
-                Toast.makeText(mContext, "삭제 버튼 선택", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(mContext, "삭제 버튼 선택", Toast.LENGTH_SHORT).show();
                 break;
 
         }

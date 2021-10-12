@@ -20,6 +20,7 @@ import com.cont96roller.weatherdiary.common.Constants;
 import com.cont96roller.weatherdiary.model.ApiInterface;
 import com.cont96roller.weatherdiary.model.ResponseWeather;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -77,6 +78,8 @@ public class WriteDiaryActivity extends AppCompatActivity implements View.OnClic
             mEditTitle.setText(mDiary.getTitle());
             mEditTextContents.setText(mDiary.getContents());
 
+
+
         } else {
             getWeatherInfo();
         }
@@ -98,7 +101,9 @@ public class WriteDiaryActivity extends AppCompatActivity implements View.OnClic
         mBtnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent editBroadcastIntent = new Intent();
+                editBroadcastIntent.setAction(Constants.ACTION_EDIT_DIARY);
+                sendBroadcast(editBroadcastIntent);
                 save();
                 finish();
             }
@@ -177,6 +182,9 @@ public class WriteDiaryActivity extends AppCompatActivity implements View.OnClic
         InsertRunnable insertRunnable = new InsertRunnable();
         Thread t = new Thread(insertRunnable);
         t.start();
+        Intent editBroadcastIntent = new Intent();
+        editBroadcastIntent.setAction(Constants.ACTION_EDIT_DIARY);
+        sendBroadcast(editBroadcastIntent);
     }
 
 
@@ -197,7 +205,9 @@ public class WriteDiaryActivity extends AppCompatActivity implements View.OnClic
 
             } else {
                 Long now = System.currentTimeMillis();
-                Date date = new Date(now);
+                Date mDate = new Date(now);
+                SimpleDateFormat simpleDate = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                String getTime = simpleDate.format(mDate);
 
                 Diary diary = new Diary();
                 diary.contents = mEditTextContents.getText().toString();
@@ -206,7 +216,7 @@ public class WriteDiaryActivity extends AppCompatActivity implements View.OnClic
                 diary.icon = mIcon;
                 diary.temp_max = mTemp_max;
                 diary.temp_min = mTemp_min;
-                diary.date = date.getTime();
+                diary.date = getTime;
 
                 DiaryDB.getInstance(mContext).diaryDao().insertAll(diary);
             }
