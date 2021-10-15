@@ -6,9 +6,9 @@ public class DiaryModel implements Serializable {
 
     private String weatherStatus;
     private String title;
-    private String date;
+    private long date;
 
-    public DiaryModel(String weatherStatus, String title, String date) {
+    public DiaryModel(String weatherStatus, String title, long date) {
         this.weatherStatus = weatherStatus;
         this.title = title;
         this.date = date;
@@ -41,11 +41,11 @@ public class DiaryModel implements Serializable {
         this.title = title;
     }
 
-    public String getDate() {
+    public long getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(long date) {
         this.date = date;
 
 

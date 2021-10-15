@@ -31,7 +31,7 @@
 
         <service android:name=".MusicService"/>
         <activity android:name=".ShowDiaryActivity"/>
-        <activity android:name=".WriteActivity"/>
+        <activity android:name=".WriteDiaryActivity" />
     </application>
 
 

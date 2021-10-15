@@ -28,6 +28,7 @@ import retrofit2.GsonConverterFactory;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
+//날씨 표시
 public class WeatherFragment extends Fragment {
 
     private Context mContext;
@@ -56,7 +57,7 @@ public class WeatherFragment extends Fragment {
 //        double lat = currentLocation.getLatitude();
 
         mContext = getContext();
-        View view = inflater.inflate(R.layout.fragment_weather, container, false);//외우는거: fragment xml과 이어주기 위해 필요한거
+        View view = inflater.inflate(R.layout.fragment_weather, container, false);
 
         String lat= "37.65171906925866";
         String lng = "127.07728375544342";
@@ -65,7 +66,6 @@ public class WeatherFragment extends Fragment {
 
         ApiInterface service = client.create(ApiInterface.class);
         Call<ResponseWeather> call = service.requestWeather("d36d81339b59c0868af503708d9057b8", Double.valueOf(lat), Double.valueOf(lng));
-//        Call<ResponseWeather> call = service.requestWeather("d36d81339b59c0868af503708d9057b8", Double.valueOf(userLocation.getLatitude()), Double.valueOf(userLocation.getLongitude()));
 
         call.enqueue(new Callback<ResponseWeather>() {
             @Override
