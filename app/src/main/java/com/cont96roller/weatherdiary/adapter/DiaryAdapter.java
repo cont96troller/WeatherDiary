@@ -103,7 +103,6 @@ public class DiaryAdapter extends RecyclerView.Adapter<DiaryAdapter.DiaryViewHol
         holder.mTxtTitle.setText(diary.getTitle());
         holder.mTxtDate.setText(String.valueOf(diary.getDate()));
         holder.mTxtWeather.setText(diary.getStatus());
-        //아이콘 가져오기
         String icon = diary.getIcon();
         String url = Constants.PREFIX_WEATHER_ICON_URL + icon + Constants.SUFFIX_WEATHER_ICON_URL;
         mContext = holder.mConstList.getContext();

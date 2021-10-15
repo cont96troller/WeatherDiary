@@ -25,16 +25,17 @@
 
     <Button
         android:id="@+id/btn_ok"
-        android:layout_width="28dp"
-        android:layout_height="28dp"
+        android:layout_width="65dp"
+        android:layout_height="50dp"
         android:layout_marginEnd="13dp"
-        android:background="@null"
-        android:text="등록"
-        android:textColor="#ffffff"
         app:layout_constraintBottom_toBottomOf="@id/btn_back"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@id/btn_back" />
+        app:layout_constraintTop_toTopOf="@id/btn_back"
+        android:text="등록"
+        android:textColor="#ffffff"
+
+        />
 
 
 
@@ -102,7 +103,9 @@
         android:hint="일기 제목"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/img_weather" />
+        app:layout_constraintTop_toBottomOf="@id/img_weather"
+        android:background="@null"
+        />
 
     <ImageView
         android:id="@+id/view_dotted_line"
@@ -125,7 +128,7 @@
         android:gravity="left"
         android:paddingHorizontal="8dp"
         android:paddingVertical="10dp"
-        android:hint="testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest"
+        android:hint="내용을 작성해 주세요."
         android:textColor="#000000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

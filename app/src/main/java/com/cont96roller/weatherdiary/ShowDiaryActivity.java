@@ -80,8 +80,6 @@ public class ShowDiaryActivity extends AppCompatActivity implements View.OnClick
         mTxtDiaryTitle.setText(mDiary.getTitle());
         mTxtDiaryContents.setText(mDiary.getContents());
         String date = String.valueOf(mDiary.getDate());
-//        mTxtTemperature.setText();
-//        holder.mTxtDate.setText(String.valueOf(diary.getDate()));
         mTxtDate.setText(String.valueOf(mDiary.getDate()));
 
         setOnClicks();
