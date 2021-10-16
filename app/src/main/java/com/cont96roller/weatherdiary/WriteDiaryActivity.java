@@ -61,7 +61,7 @@ public class WriteDiaryActivity extends AppCompatActivity implements View.OnClic
 
         Intent intent = getIntent();
         mIsEditMode = intent.getBooleanExtra("key_isEditMode", false);
-        if(mIsEditMode == true) {
+        if (mIsEditMode == true) {
 
             mDiary = (Diary) intent.getSerializableExtra("key_diary");
             mTxtWeatherStatus.setText(mDiary.getStatus());
@@ -79,12 +79,9 @@ public class WriteDiaryActivity extends AppCompatActivity implements View.OnClic
             mEditTextContents.setText(mDiary.getContents());
 
 
-
         } else {
             getWeatherInfo();
         }
-
-
 
 
     }
@@ -105,7 +102,6 @@ public class WriteDiaryActivity extends AppCompatActivity implements View.OnClic
                 editBroadcastIntent.setAction(Constants.ACTION_EDIT_DIARY);
                 sendBroadcast(editBroadcastIntent);
                 save();
-                finish();
             }
         });
         setOnClicks();
@@ -128,7 +124,6 @@ public class WriteDiaryActivity extends AppCompatActivity implements View.OnClic
             @Override
             public void onResponse(Response<ResponseWeather> response) {
                 if (response.isSuccess()) {
-
 
 
                     ResponseWeather responseWeather = response.body();
@@ -185,6 +180,7 @@ public class WriteDiaryActivity extends AppCompatActivity implements View.OnClic
         Intent editBroadcastIntent = new Intent();
         editBroadcastIntent.setAction(Constants.ACTION_EDIT_DIARY);
         sendBroadcast(editBroadcastIntent);
+        finish();
     }
 
 
@@ -198,7 +194,7 @@ public class WriteDiaryActivity extends AppCompatActivity implements View.OnClic
 
         @Override
         public void run() {
-            if(mIsEditMode == true) {
+            if (mIsEditMode == true) {
                 mDiary.setTitle(mEditTitle.getText().toString());
                 mDiary.setContents(mEditTextContents.getText().toString());
                 DiaryDB.getInstance(mContext).diaryDao().updateDiary(mDiary);

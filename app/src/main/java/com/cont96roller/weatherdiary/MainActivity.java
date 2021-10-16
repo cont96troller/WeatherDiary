@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements TestInterface, Vi
     private Button btn_bgm;
     private Context mContext;
     private String mPersonName = "";
-   List<Diary> mDiaryList = null;
+    List<Diary> mDiaryList = null;
 
     List<Diary> diaryList;
     private DiaryDB diaryDB = null;
@@ -104,10 +104,7 @@ public class MainActivity extends AppCompatActivity implements TestInterface, Vi
         mWriteButton.setOnClickListener(v -> {
             Intent intent = new Intent(getApplicationContext(), WriteDiaryActivity.class);
             startActivity(intent);
-            finish();
         });
-
-
 
 
         btn_bgm = findViewById(R.id.btn_bgm);
@@ -119,31 +116,6 @@ public class MainActivity extends AppCompatActivity implements TestInterface, Vi
 
             }
         });
-
-//        mBtnMoveWrite = findViewById(R.id.btn_write);
-//        mBtnMoveWrite.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(mContext, WriteActivity.class);
-//                intent.putExtra("key", "명길아!");
-//                startActivity(intent);
-//                Toast.makeText(mContext, "명길 추워", Toast.LENGTH_SHORT).show();
-//            }
-//        });
-
-//        mBtnMoveWrite = findViewById(R.id.btn_write);
-//        mBtnMoveWrite.setOnClickListener(this);
-//        mBtnMoveWrite.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(mContext, WriteActivity.class);
-//                intent.putExtra("key2", "명길아!");
-//                startActivity(intent);
-//                Toast.makeText(mContext, "명길 추워", Toast.LENGTH_SHORT).show();
-//            }
-//        });
-
-
 
 
         DiaryModel diaryModel;
@@ -164,21 +136,13 @@ public class MainActivity extends AppCompatActivity implements TestInterface, Vi
         mRadioDiary = findViewById(R.id.radio_diary);
         mWeatherFragment = new WeatherFragment();
         mDiaryFragment = new DiaryFragment();
-
         mFragmentManager = getSupportFragmentManager();
-
-//        mFragmentTransaction = mFragmentManager.beginTransaction();
-//        mFragmentTransaction.replace(R.id.framelayout, mWeatherFragment).commitAllowingStateLoss();
-
 
         mRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
 
-
-                Log.e(TAG, "선택된값 : " + i);
                 mFragmentTransaction = mFragmentManager.beginTransaction();
-
 
                 if (i == R.id.radio_weather) {
                     mFragmentTransaction.replace(R.id.framelayout, mWeatherFragment).commitAllowingStateLoss();
@@ -232,11 +196,12 @@ public class MainActivity extends AppCompatActivity implements TestInterface, Vi
     @Override
     public void onClick(View view) {
 
-        switch(view.getId()) {
-            case R.id.btn_write: Intent intent = new Intent(mContext, WriteDiaryActivity.class);
+        switch (view.getId()) {
+            case R.id.btn_write:
+                Intent intent = new Intent(mContext, WriteDiaryActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 intent.putExtra("key2", "일기작성하기");
                 startActivity(intent);
-                Toast.makeText(mContext, "명길 추워", Toast.LENGTH_SHORT).show();
                 break;
 
 

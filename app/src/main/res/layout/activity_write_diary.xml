@@ -23,21 +23,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_ok"
-        android:layout_width="65dp"
-        android:layout_height="50dp"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
         android:layout_marginEnd="13dp"
+        android:background="@drawable/icon_save"
         app:layout_constraintBottom_toBottomOf="@id/btn_back"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@id/btn_back"
-        android:text="등록"
-        android:textColor="#ffffff"
-
-        />
-
-
+        app:layout_constraintTop_toTopOf="@id/btn_back" />
 
     <ImageView
         android:id="@+id/img_weather"
@@ -100,12 +95,11 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="18dp"
         android:layout_marginVertical="20dp"
+        android:background="@null"
         android:hint="일기 제목"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/img_weather"
-        android:background="@null"
-        />
+        app:layout_constraintTop_toBottomOf="@id/img_weather" />
 
     <ImageView
         android:id="@+id/view_dotted_line"
@@ -126,9 +120,9 @@
         android:layout_marginHorizontal="18dp"
         android:layout_marginBottom="20dp"
         android:gravity="left"
+        android:hint="내용을 작성해 주세요."
         android:paddingHorizontal="8dp"
         android:paddingVertical="10dp"
-        android:hint="내용을 작성해 주세요."
         android:textColor="#000000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

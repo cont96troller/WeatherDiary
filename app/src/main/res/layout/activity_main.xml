@@ -10,6 +10,7 @@
         android:id="@+id/txt_title"
         android:layout_width="match_parent"
         android:layout_height="54dp"
+        android:elevation="10dp"
         android:gravity="start|center_vertical"
         android:orientation="horizontal"
         android:paddingStart="57dp"
@@ -24,6 +25,7 @@
         android:id="@+id/radio_group"
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:elevation="15dp"
         android:orientation="horizontal"
         android:weightSum="2"
         app:layout_constraintEnd_toEndOf="parent"
@@ -35,11 +37,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:button="@null"
             android:buttonTint="@color/black"
             android:gravity="center"
-            android:text="현재날씨"
-            android:button="@null"
-            />
+            android:text="현재날씨" />
 
 
         <RadioButton
@@ -47,17 +48,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="center"
-            android:text="일기목록"
             android:button="@null"
-            />
+            android:gravity="center"
+            android:text="일기목록" />
     </RadioGroup>
 
     <FrameLayout
         android:id="@+id/framelayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="#990000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -65,15 +64,15 @@
         app:layout_constraintTop_toBottomOf="@id/radio_group"
         app:layout_constraintVertical_bias="1.0" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_write"
-        android:layout_width="100dp"
+        android:layout_width="55dp"
         android:layout_height="55dp"
         android:layout_marginEnd="18dp"
         android:layout_marginBottom="20dp"
+        android:background="@drawable/ic_ico_wirte"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:text="작성"
 
         />
 
@@ -82,11 +81,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="BGM"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        ></Button>
-
-
+        app:layout_constraintTop_toTopOf="parent"></Button>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

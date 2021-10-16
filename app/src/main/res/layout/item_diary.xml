@@ -5,57 +5,57 @@
     android:id="@+id/const_list"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#FFFFFF"
-    android:layout_marginStart="8dp"
-    android:layout_marginEnd="8dp"
-    android:layout_marginTop="8dp"
     android:layout_centerInParent="true"
+    android:layout_marginStart="8dp"
+    android:layout_marginTop="8dp"
+    android:layout_marginEnd="8dp"
+    android:background="#FFFFFF"
+    android:elevation="15dp"
 
     >
 
     <ImageView
-        app:layout_constraintVertical_bias="0.2"
-        app:layout_constraintDimensionRatio="1:1"
         android:id="@+id/img_item_weather"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_marginStart="100dp"
         android:foregroundGravity="center"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/txt_weather"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toStartOf="@id/txt_weather"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.2"
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
-        app:layout_constraintVertical_bias="0.2"
-        app:layout_constraintDimensionRatio="1:1"
-        android:gravity="center"
         android:id="@+id/txt_weather"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="15dp"
         android:layout_marginBottom="15dp"
+        android:gravity="center"
         android:text="맑음"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="@+id/img_item_weather"
         app:layout_constraintStart_toStartOf="@+id/img_item_weather"
         app:layout_constraintTop_toBottomOf="@+id/img_item_weather"
-        />
+        app:layout_constraintVertical_bias="0.2" />
+
     <TextView
-        android:textStyle="bold"
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="이것은 제목"
         android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/date"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/txt_weather"
-        app:layout_constraintTop_toTopOf="@id/img_item_weather"
-        app:layout_constraintBottom_toTopOf="@+id/date"
-        />
+        app:layout_constraintTop_toTopOf="@id/img_item_weather" />
 
     <TextView
         android:id="@+id/date"
@@ -63,11 +63,10 @@
         android:layout_height="wrap_content"
         android:text="2021.09.21"
         android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@id/txt_weather"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/txt_weather"
-        app:layout_constraintTop_toBottomOf="@id/title"
-        app:layout_constraintBottom_toBottomOf="@id/txt_weather"
-        />
+        app:layout_constraintTop_toBottomOf="@id/title" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
