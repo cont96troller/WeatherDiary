@@ -47,7 +47,7 @@ public class DiaryAdapter extends RecyclerView.Adapter<DiaryAdapter.DiaryViewHol
     @NonNull
     @Override
     public DiaryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-//RecyclerView의 아이템 xml 파일로 무엇을 사용할지 선언
+    //RecyclerView의 아이템 xml 파일로 무엇을 사용할지 선언
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_diary, parent, false);
 
@@ -158,6 +158,7 @@ public class DiaryAdapter extends RecyclerView.Adapter<DiaryAdapter.DiaryViewHol
         }
     }
 
+    //사용하지 않았음
     private void getWeatherinfo() {
         String lat = "37.65171906925866";
         String lot = "127.07728375544342";
