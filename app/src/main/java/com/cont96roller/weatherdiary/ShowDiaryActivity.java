@@ -63,6 +63,9 @@ public class ShowDiaryActivity extends AppCompatActivity implements View.OnClick
         mTxtWeatherStatus = findViewById(R.id.txt_weather_status);
         mImgWeather = findViewById(R.id.img_weather);
         mTxtTemperature = findViewById(R.id.txt_temp);
+        if (mDiary == null) {
+            return;
+        }
 
         mTxtWeatherStatus.setText(mDiary.getStatus());
 //        mImgWeather.setImageIcon(mDiary.getIcon());
@@ -105,17 +108,12 @@ public class ShowDiaryActivity extends AppCompatActivity implements View.OnClick
                 break;
 
             case R.id.img_btn_edit:
-                Toast.makeText(mContext, "수정 버튼 선택", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(mContext, WriteDiaryActivity.class);
                 boolean isEditMode = true;
                 intent.putExtra("key_isEditMode", isEditMode);
                 intent.putExtra("key_diary", mDiary);
                 startActivity(intent);
                 finish();
-
-//                Intent editBroadcastIntent = new Intent();
-//                editBroadcastIntent.setAction(Constants.ACTION_EDIT_DIARY);
-//                sendBroadcast(editBroadcastIntent);
                 break;
 
             case R.id.img_btn_delete:
@@ -127,10 +125,6 @@ public class ShowDiaryActivity extends AppCompatActivity implements View.OnClick
                 int diaryId = getIntent().getIntExtra(DIARY_ID_KEY, 0);
                 mDiaryDao.deleteByDiaryId(diaryId);
                 finish();
-//                diary.setId(0);
-//                mDiaryDao.delete(diary);
-
-//                Toast.makeText(mContext, "삭제 버튼 선택", Toast.LENGTH_SHORT).show();
                 break;
 
         }

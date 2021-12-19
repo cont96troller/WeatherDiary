@@ -8,7 +8,7 @@
         android:id="@+id/recyclerview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#9BC39B"
+        android:background="#25CEF1CE"
         android:gravity="center"
         android:text="일기목록"
         android:textSize="60sp"

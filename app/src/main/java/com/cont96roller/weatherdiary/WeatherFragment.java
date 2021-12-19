@@ -59,7 +59,7 @@ public class WeatherFragment extends Fragment {
         mContext = getContext();
         View view = inflater.inflate(R.layout.fragment_weather, container, false);
 
-        String lat= "37.65171906925866";
+        String lat = "37.65171906925866";
         String lng = "127.07728375544342";
 
         Retrofit client = new Retrofit.Builder().baseUrl("http://api.openweathermap.org").addConverterFactory(GsonConverterFactory.create()).build();
@@ -98,17 +98,8 @@ public class WeatherFragment extends Fragment {
                     String url = "https://openweathermap.org/img/w/" + icon + ".png";
 
                     Glide.with(mContext)
-
-//                            .load("https://openweathermap.org/img/w/04n.png")
                             .load(url)
-
-//                            .load(R.drawable.ico_back_nor)
                             .into(imageView);
-
-
-//                            .error(R.drawable.imagenotfound);
-
-//                    tem.setText(String.valueOf(repo.getMain().getTemp()));
                 } else {
 
                 }
@@ -118,28 +109,6 @@ public class WeatherFragment extends Fragment {
             public void onFailure(Throwable t) {
             }
         });
-//
-//        TestClass.dong();
-//
-//        TestClass testClass = new TestClass();
-//        testClass.myoung();
-//
-//        DiaryModel diaryModel = new DiaryModel("명길");
-//
-//        diaryModel.setWeatherStatus("명길");
-//
-//        MainActivity mainActivity = new MainActivity();
-//
-//        mainActivity.setmPersonName("명길");
-//
-//        TestClass testClass1 = new TestClass();
-//        testClass1.toast(mContext);
-//
-//        testClass1.kang();
-//
-//        Toast.makeText(mContext, testClass1.kang(), Toast.LENGTH_SHORT).show();
-
-
         return view;
     }
 
@@ -150,8 +119,7 @@ public class WeatherFragment extends Fragment {
         if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, this.REQUEST_CODE_LOCATION);
             getMyLocation();
-        }
-        else {
+        } else {
             // 수동으로 위치 구하기
             String locationProvider = LocationManager.PASSIVE_PROVIDER;
             currentLocation = locationManager.getLastKnownLocation(locationProvider);
