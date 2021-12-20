@@ -68,18 +68,15 @@ public class MainActivity extends AppCompatActivity implements TestInterface, Vi
 
         mContext = this;
 
-
         mWriteButton = findViewById(R.id.btn_write);
 
         mContext = getApplicationContext();
         diaryAdater = new DiaryAdapter(mDiaryList);
 
-
         //DB 생성
         diaryDB = DiaryDB.getInstance(this);
 
         class InsertRunnable implements Runnable {
-
 
             @Override
             public void run() {
@@ -87,7 +84,6 @@ public class MainActivity extends AppCompatActivity implements TestInterface, Vi
                     diaryList = DiaryDB.getInstance(mContext).diaryDao().getAll();
                     diaryAdater = new DiaryAdapter(mDiaryList);
                     diaryAdater.notifyDataSetChanged();
-//                    String title = diaryList.get(0).contents;
                     mRecyclerView.setAdapter(diaryAdater);
                     LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(mContext, RecyclerView.VERTICAL, false);
                     mRecyclerView.setLayoutManager(mLinearLayoutManager);
@@ -123,9 +119,6 @@ public class MainActivity extends AppCompatActivity implements TestInterface, Vi
         diaryModel = new DiaryModel("맑음", "이것은 제목", 0L);
         diaryModel2 = new DiaryModel("흐림", "이것은 제목2", 0L);
         ArrayList<DiaryModel> diaryList = new ArrayList<>();
-//        diaryList.add("맑음");
-//        diaryList.add("이것은 제목");
-//        diaryList.add("2021.09.21");
         diaryList.add(diaryModel);
         diaryList.add(diaryModel2);
         diaryList.add(new DiaryModel("바람많은", "춥다", 0L));
@@ -203,7 +196,6 @@ public class MainActivity extends AppCompatActivity implements TestInterface, Vi
                 intent.putExtra("key2", "일기작성하기");
                 startActivity(intent);
                 break;
-
 
         }
 

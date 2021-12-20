@@ -35,8 +35,6 @@ public class DiaryAdapter extends RecyclerView.Adapter<DiaryAdapter.DiaryViewHol
 
     private Context mContext;
     private ImageView mImgWeather;
-
-
     List<Diary> mDiaryList = null;
     final private static String TAG = "pyorong";
 
@@ -58,47 +56,7 @@ public class DiaryAdapter extends RecyclerView.Adapter<DiaryAdapter.DiaryViewHol
 
     @Override
     public void onBindViewHolder(@NonNull DiaryViewHolder holder, int position) {
-
-//        String lat = "37.65171906925866";
-//        String lng = "127.07728375544342";
-//
-//        Retrofit client = new Retrofit.Builder().baseUrl("http://api.openweathermap.org").addConverterFactory(GsonConverterFactory.create()).build();
-//
-//        ApiInterface service = client.create(ApiInterface.class);
-//        Call<ResponseWeather> call = service.requestWeather("d36d81339b59c0868af503708d9057b8", Double.valueOf(lat), Double.valueOf(lng));
-//
-//        call.enqueue(new Callback<ResponseWeather>() {
-//            @Override
-//            public void onResponse(Response<ResponseWeather> response) {
-//                if (response.isSuccess()) {
-//                    ResponseWeather responseWeather = response.body();
-//
-//                    Diary diary = mDiaryList.get(position);
-//                    String icon = diary.getIcon();
-//                    String url = "https://openweathermap.org/img/w/" + icon + ".png";
-//
-////                    Glide.with(mContext)
-//
-////                            .load(url)
-//
-////                            .into(this.mTxtWeather);
-//
-//                } else {
-//
-//
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Throwable t) {
-//
-//            }
-//        });
-
-
-
-//        Item이 하나씩 그려질 때 마다 호출됨
-
+        //Item이 하나씩 그려질 때 마다 호출됨
         Diary diary = mDiaryList.get(position);
         holder.mTxtTitle.setText(diary.getTitle());
         holder.mTxtDate.setText(String.valueOf(diary.getDate()));
@@ -110,8 +68,6 @@ public class DiaryAdapter extends RecyclerView.Adapter<DiaryAdapter.DiaryViewHol
                 .load(url)
                 .into(holder.mImgWeather);
 
-
-
         holder.mConstList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -119,20 +75,13 @@ public class DiaryAdapter extends RecyclerView.Adapter<DiaryAdapter.DiaryViewHol
                 Intent intent = new Intent(mContext, ShowDiaryActivity.class);
                 intent.putExtra(DIARY_ID_KEY, diary.id);
 
-
-//                Toast.makeText(mContext, String.valueOf(position), Toast.LENGTH_SHORT).show();
                 mContext.startActivity(intent);
 
                 switch(view.getId()) {
 
-
-
                 }
             }
         });
-
-
-
     }
 
     @Override
@@ -172,10 +121,6 @@ public class DiaryAdapter extends RecyclerView.Adapter<DiaryAdapter.DiaryViewHol
             @Override
             public void onResponse(Response<ResponseWeather> response) {
                 if (response.isSuccess()) {
-
-//                    ImageView imaWeather =
-
-
 
                 }
             }

@@ -45,16 +45,8 @@ public class WeatherFragment extends Fragment {
         if (userLocation != null) {
             double latitude = userLocation.getLatitude();
             double longitude = userLocation.getLongitude();
-//            userVO.setLat(latitude);
-//            userVO.setLon(longitude);
-        }
 
-//        Location currentLocation = null;
-//        String locationProvider = LocationManager.GPS_PROVIDER;
-//        currentLocation = locationManager.getLastKnownLocation(locationProvider);
-////        if (currentLocation != null) {
-//        double lng = currentLocation.getLongitude();
-//        double lat = currentLocation.getLatitude();
+        }
 
         mContext = getContext();
         View view = inflater.inflate(R.layout.fragment_weather, container, false);
@@ -75,22 +67,8 @@ public class WeatherFragment extends Fragment {
                     String main = response.body().getWeather().get(0).getMain();
                     TextView textview = view.findViewById(R.id.txt_weather_status);
                     textview.setText(main);
-                    //response에있는 main을 가져온다.
-                    //xml에 textview 변수로 선언해주고
-                    //id를 가져온다
-                    //선언해준 textview에 main을 넣어준다.
-
-                    //1. xml에 ImageView만들고d 위치잡고 id부여
-                    //2. gilde사용
-                    //3. ImageView 변수로 선언
-                    //4. id 가져오고
-                    //5. 선언해준 ImageView에 ico_back_nor.png 넣어준다.
-                    //6. 선언해준 ImageView에 https://openweathermap.org/img/w/04n.png 넣어준다.
-                    //7. icon을 선언해주고 String
-                    //8. icon에 icon값을담아 url경로를 만들어준다. ""
 
                     ImageView imageView = view.findViewById(R.id.imageView);
-//                    imageView.setImageResource(R.drawable.ico_back_nor);
 
                     String icon;
                     icon = response.body().getWeather().get(0).getIcon();

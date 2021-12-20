@@ -45,8 +45,6 @@ public class ShowDiaryActivity extends AppCompatActivity implements View.OnClick
         DiaryDB diaryDB = DiaryDB.getInstance(mContext);
         mDiaryDao = diaryDB.diaryDao();
         mDiary = mDiaryDao.getDiary(diaryId);
-//        mDiaryDao.deleteByDiaryId(diaryId);
-
 
         initView();
         getWeatherInfo();
