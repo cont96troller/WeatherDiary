@@ -73,12 +73,12 @@ public class DiaryFragment extends Fragment {
     public void getDiaryList() {
 
         diaryList = DiaryDB.getInstance(mContext).diaryDao().getAll();
-        InsertRunnable insertRunnable = new InsertRunnable();
-        Thread t = new Thread(insertRunnable);
+        GetDiaryListRunnable getDiaryListRunnable = new GetDiaryListRunnable();
+        Thread t = new Thread(getDiaryListRunnable);
         t.start();
     }
-
-    class InsertRunnable implements Runnable {
+    //이게 정석
+    class GetDiaryListRunnable implements Runnable {
 
         @Override
         public void run() {

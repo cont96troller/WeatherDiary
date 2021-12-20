@@ -6,6 +6,7 @@ import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
 
+//intent에 담기 위해
 @Entity
 public class Diary implements Serializable {
     @PrimaryKey(autoGenerate = true)

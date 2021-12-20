@@ -1,6 +1,6 @@
 package com.cont96roller.weatherdiary.model;
 
-
+//get set 만들어줬다
 public class Main {
     Double temp;
     Integer pressure;

@@ -18,7 +18,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.Toast;
 
 import com.cont96roller.weatherdiary.adapter.DiaryAdapter;
 import com.cont96roller.weatherdiary.interfaces.TestInterface;
@@ -40,26 +39,18 @@ public class MainActivity extends AppCompatActivity implements TestInterface, Vi
     private Button mBtnMoveWrite;
     private Button mButton2;
     private View mView;
-    private Button btn_bgm;
+    private Button mBtnBGM;
     private Context mContext;
     private String mPersonName = "";
     List<Diary> mDiaryList = null;
 
     List<Diary> diaryList;
     private DiaryDB diaryDB = null;
-    private DiaryAdapter diaryAdater;
+    private DiaryAdapter mDiaryAdater;
     private Button mWriteButton;
     private RecyclerView mRecyclerView;
 
-    //이거는 없어도 되지 않나?(아래 3줄)
-    public String getmPersonName() {
-        return mPersonName;
-    }
-    public void setmPersonName(String mPersonName) {
-        this.mPersonName = mPersonName;
-    }
-
-    final public static String TAG = "pyorong";
+    final public static String TAG = "mk";
 
     //Activity 생명주기 최초 onCreate
     @Override
@@ -68,24 +59,25 @@ public class MainActivity extends AppCompatActivity implements TestInterface, Vi
         setContentView(R.layout.activity_main);
 
         //이어플리케이션에 정보를 담아주고
-        mContext = this;
         mWriteButton = findViewById(R.id.btn_write);
         mContext = getApplicationContext();
-        diaryAdater = new DiaryAdapter(mDiaryList);
+        mDiaryAdater = new DiaryAdapter(mDiaryList);
 
-        //DB 생성
+        //Room 사용을 위한 DB생성
         diaryDB = DiaryDB.getInstance(this);
 
+        //mainThread에서 DB작업을 안하려고 다른 Thread를 만듬
         //Runnable을 상속받는 InsertPunnable 클래스 만들고
-        class InsertRunnable implements Runnable {
+        class CreateRunnable implements Runnable {
 
             @Override
             public void run() {
                 try {
                     diaryList = DiaryDB.getInstance(mContext).diaryDao().getAll();
-                    diaryAdater = new DiaryAdapter(mDiaryList);
-                    diaryAdater.notifyDataSetChanged();
-                    mRecyclerView.setAdapter(diaryAdater);
+                    mDiaryAdater = new DiaryAdapter(mDiaryList);
+                    //recyclerview를 다시 그려줌
+                    mDiaryAdater.notifyDataSetChanged();
+                    mRecyclerView.setAdapter(mDiaryAdater);
                     //레이아웃 매니저를통해 수직정렬 정해줌
                     LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(mContext, RecyclerView.VERTICAL, false);
                     mRecyclerView.setLayoutManager(mLinearLayoutManager);
@@ -96,8 +88,8 @@ public class MainActivity extends AppCompatActivity implements TestInterface, Vi
             }
         }
         //insertRunnable에 InsertRunnable을 인스턴스화해서 넣어주고
-        InsertRunnable insertRunnable = new InsertRunnable();
-        Thread t = new Thread(insertRunnable);
+        CreateRunnable createRunnable = new CreateRunnable();
+        Thread t = new Thread(createRunnable);
         t.start();
 
         mWriteButton.setOnClickListener(v -> {
@@ -106,9 +98,9 @@ public class MainActivity extends AppCompatActivity implements TestInterface, Vi
         });
 
 
-        btn_bgm = findViewById(R.id.btn_bgm);
+        mBtnBGM = findViewById(R.id.btn_bgm);
 
-        btn_bgm.setOnClickListener(new View.OnClickListener() {
+        mBtnBGM.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startService(new Intent(getApplicationContext(), MusicService.class));

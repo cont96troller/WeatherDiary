@@ -64,7 +64,7 @@ public class WriteDiaryActivity extends AppCompatActivity implements View.OnClic
         //intent트를 통해 정보를 가져오는데 참인지 거짓인지
         //유지보수를 위해 작성화면으로 수정, 상세보기를 구현
         mIsEditMode = intent.getBooleanExtra("key_isEditMode", false);
-        if (mIsEditMode == true) {
+        if (mIsEditMode) {
             //오브젝트 타입을 다른액티비로 전달받기위한 SerializalbeExtra
             mDiary = (Diary) intent.getSerializableExtra("key_diary");
             mTxtWeatherStatus.setText(mDiary.getStatus());
@@ -130,7 +130,7 @@ public class WriteDiaryActivity extends AppCompatActivity implements View.OnClic
             public void onResponse(Response<ResponseWeather> response) {
                 if (response.isSuccess()) {
 
-
+                    //제이슨을 파싱위해(오픈왜더맵에서 리턴값으로보내준)
                     ResponseWeather responseWeather = response.body();
                     String main = responseWeather.getWeather().get(0).getMain();
                     String icon = responseWeather.getWeather().get(0).getIcon();

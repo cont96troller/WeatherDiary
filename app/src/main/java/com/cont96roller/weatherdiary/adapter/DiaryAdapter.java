@@ -36,7 +36,7 @@ public class DiaryAdapter extends RecyclerView.Adapter<DiaryAdapter.DiaryViewHol
     private Context mContext;
     private ImageView mImgWeather;
     List<Diary> mDiaryList = null;
-    final private static String TAG = "pyorong";
+    final private static String TAG = "mk";
 
     public DiaryAdapter(List<Diary> mDiaryList) {
         this.mDiaryList = mDiaryList;
