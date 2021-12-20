@@ -33,6 +33,7 @@ import retrofit2.Retrofit;
 
 public class WriteDiaryActivity extends AppCompatActivity implements View.OnClickListener {
 
+    //각종 버튼 변수 선언
     private Button mBtnBack;
     private Context mContext;
     private Button mBtnSave;
@@ -51,21 +52,24 @@ public class WriteDiaryActivity extends AppCompatActivity implements View.OnClic
     private Diary mDiary;
     private boolean mIsEditMode;
 
-
+    //액티비티 최초실행 onCreate
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_write_diary);
         mContext = this;
+        //각종 버튼 연결 메소드
         initView();
-
         Intent intent = getIntent();
+        //intent트를 통해 정보를 가져오는데 참인지 거짓인지
+        //유지보수를 위해 작성화면으로 수정, 상세보기를 구현
         mIsEditMode = intent.getBooleanExtra("key_isEditMode", false);
         if (mIsEditMode == true) {
-
+            //오브젝트 타입을 다른액티비로 전달받기위한 SerializalbeExtra
             mDiary = (Diary) intent.getSerializableExtra("key_diary");
             mTxtWeatherStatus.setText(mDiary.getStatus());
             String tempFormat = "%1s°C / %2s°C";
+            //
             String tempMin = String.valueOf(mDiary.getTemp_min() - 274);
             String tempMax = String.valueOf(mDiary.getTemp_max() - 274);
             String temperature = String.format(tempFormat, tempMin, tempMax);
@@ -80,6 +84,7 @@ public class WriteDiaryActivity extends AppCompatActivity implements View.OnClic
 
 
         } else {
+            //mIsEditMode에 값이 없을경후 메소드 호출
             getWeatherInfo();
         }
 

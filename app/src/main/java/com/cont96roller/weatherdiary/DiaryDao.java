@@ -8,7 +8,7 @@ import androidx.room.Update;
 
 import java.util.List;
 
-    @Dao
+@Dao
 public interface DiaryDao {
     @Query("SELECT * FROM diary")
     List<Diary> getAll();
@@ -26,5 +26,5 @@ public interface DiaryDao {
     void delete(Diary diary);
 
     @Query("DELETE FROM diary WHERE id=:diaryId")
-        void deleteByDiaryId(int diaryId);
+    void deleteByDiaryId(int diaryId);
 }

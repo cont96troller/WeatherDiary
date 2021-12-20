@@ -29,6 +29,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements TestInterface, View.OnClickListener {
 
+    //각종 변수 선언
     private RadioGroup mRadioGroup;
     private RadioButton mRadioWeather;
     private RadioButton mRadioDiary;
@@ -50,32 +51,32 @@ public class MainActivity extends AppCompatActivity implements TestInterface, Vi
     private Button mWriteButton;
     private RecyclerView mRecyclerView;
 
-
+    //이거는 없어도 되지 않나?(아래 3줄)
     public String getmPersonName() {
         return mPersonName;
     }
-
     public void setmPersonName(String mPersonName) {
         this.mPersonName = mPersonName;
     }
 
     final public static String TAG = "pyorong";
 
+    //Activity 생명주기 최초 onCreate
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //이어플리케이션에 정보를 담아주고
         mContext = this;
-
         mWriteButton = findViewById(R.id.btn_write);
-
         mContext = getApplicationContext();
         diaryAdater = new DiaryAdapter(mDiaryList);
 
         //DB 생성
         diaryDB = DiaryDB.getInstance(this);
 
+        //Runnable을 상속받는 InsertPunnable 클래스 만들고
         class InsertRunnable implements Runnable {
 
             @Override
@@ -85,6 +86,7 @@ public class MainActivity extends AppCompatActivity implements TestInterface, Vi
                     diaryAdater = new DiaryAdapter(mDiaryList);
                     diaryAdater.notifyDataSetChanged();
                     mRecyclerView.setAdapter(diaryAdater);
+                    //레이아웃 매니저를통해 수직정렬 정해줌
                     LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(mContext, RecyclerView.VERTICAL, false);
                     mRecyclerView.setLayoutManager(mLinearLayoutManager);
                 } catch (Exception e) {
@@ -93,6 +95,7 @@ public class MainActivity extends AppCompatActivity implements TestInterface, Vi
 
             }
         }
+        //insertRunnable에 InsertRunnable을 인스턴스화해서 넣어주고
         InsertRunnable insertRunnable = new InsertRunnable();
         Thread t = new Thread(insertRunnable);
         t.start();
@@ -113,7 +116,7 @@ public class MainActivity extends AppCompatActivity implements TestInterface, Vi
             }
         });
 
-
+        //값이 넘어오는지 테스트하는 코드
         DiaryModel diaryModel;
         DiaryModel diaryModel2;
         diaryModel = new DiaryModel("맑음", "이것은 제목", 0L);
@@ -123,14 +126,16 @@ public class MainActivity extends AppCompatActivity implements TestInterface, Vi
         diaryList.add(diaryModel2);
         diaryList.add(new DiaryModel("바람많은", "춥다", 0L));
 
-
+        //findViewById로 버튼 연결
         mRadioGroup = findViewById(R.id.radio_group);
         mRadioWeather = findViewById(R.id.radio_weather);
         mRadioDiary = findViewById(R.id.radio_diary);
         mWeatherFragment = new WeatherFragment();
         mDiaryFragment = new DiaryFragment();
+        //액티비티와 연결해주는 프레그먼트 매니저
         mFragmentManager = getSupportFragmentManager();
 
+        //클릭했을때 변화를 감지
         mRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
@@ -180,15 +185,14 @@ public class MainActivity extends AppCompatActivity implements TestInterface, Vi
         Log.d(TAG, "onDestroy");
     }
 
-
     @Override
     public void testMkMk() {
-
     }
 
     @Override
     public void onClick(View view) {
 
+        //작성하기버튼으로 클릭하면 어디로 이동되는지
         switch (view.getId()) {
             case R.id.btn_write:
                 Intent intent = new Intent(mContext, WriteDiaryActivity.class);

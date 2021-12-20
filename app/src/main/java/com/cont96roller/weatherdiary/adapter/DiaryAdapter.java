@@ -45,7 +45,7 @@ public class DiaryAdapter extends RecyclerView.Adapter<DiaryAdapter.DiaryViewHol
     @NonNull
     @Override
     public DiaryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-    //RecyclerView의 아이템 xml 파일로 무엇을 사용할지 선언
+        //RecyclerView의 아이템 xml 파일로 무엇을 사용할지 선언
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_diary, parent, false);
 
@@ -77,7 +77,7 @@ public class DiaryAdapter extends RecyclerView.Adapter<DiaryAdapter.DiaryViewHol
 
                 mContext.startActivity(intent);
 
-                switch(view.getId()) {
+                switch (view.getId()) {
 
                 }
             }
@@ -90,7 +90,7 @@ public class DiaryAdapter extends RecyclerView.Adapter<DiaryAdapter.DiaryViewHol
     }
 
     class DiaryViewHolder extends RecyclerView.ViewHolder {
-        protected  ImageView mImgWeather;
+        protected ImageView mImgWeather;
         protected TextView mTxtWeather;
         protected TextView mTxtTitle;
         protected TextView mTxtDate;

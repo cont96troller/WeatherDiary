@@ -4,5 +4,5 @@ public interface TestInterface {
 
     public void testMkMk();
 
-    }
+}
 

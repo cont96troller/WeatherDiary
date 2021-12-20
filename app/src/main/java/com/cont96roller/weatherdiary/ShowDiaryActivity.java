@@ -41,13 +41,14 @@ public class ShowDiaryActivity extends AppCompatActivity implements View.OnClick
         setContentView(R.layout.activity_show_diary);
         mContext = this;
 
+        //Intent를 사용하여 데이터를 받아옴
         int diaryId = getIntent().getIntExtra(DIARY_ID_KEY, 0);
+        //getInstance를 사용하여 정보 받아옴
         DiaryDB diaryDB = DiaryDB.getInstance(mContext);
         mDiaryDao = diaryDB.diaryDao();
         mDiary = mDiaryDao.getDiary(diaryId);
 
         initView();
-        getWeatherInfo();
 
     }
 
@@ -91,11 +92,6 @@ public class ShowDiaryActivity extends AppCompatActivity implements View.OnClick
         mBtnEdit.setOnClickListener(this);
         mBtnDelete.setOnClickListener(this);
     }
-
-    private void getWeatherInfo() {
-
-    }
-
 
     @Override
     public void onClick(View view) {

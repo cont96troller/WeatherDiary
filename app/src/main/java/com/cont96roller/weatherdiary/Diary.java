@@ -11,25 +11,25 @@ public class Diary implements Serializable {
     @PrimaryKey(autoGenerate = true)
     public int id;
 
-    @ColumnInfo(name="title")
+    @ColumnInfo(name = "title")
     public String title;
 
-    @ColumnInfo(name="date")
+    @ColumnInfo(name = "date")
     public String date;
 
-    @ColumnInfo(name="status")
+    @ColumnInfo(name = "status")
     public String status;
 
-    @ColumnInfo(name="temp_max")
+    @ColumnInfo(name = "temp_max")
     public int temp_max;
 
-    @ColumnInfo(name="temp_min")
+    @ColumnInfo(name = "temp_min")
     public int temp_min;
 
-    @ColumnInfo(name="icon")
+    @ColumnInfo(name = "icon")
     public String icon;
 
-    @ColumnInfo(name="contents")
+    @ColumnInfo(name = "contents")
     public String contents;
 
 

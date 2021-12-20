@@ -48,6 +48,5 @@ public class DiaryModel implements Serializable {
     public void setDate(long date) {
         this.date = date;
 
-
     }
 }

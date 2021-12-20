@@ -48,10 +48,10 @@ public class DiaryFragment extends Fragment {
             }
         });
 
-
         getDiaryList();
         initView(view);
 
+        //Receiver로 정보를 받아서 최신화시켜준다.
         mReceiver = new DiaryListUpdateReceiver();
         IntentFilter filter = new IntentFilter();
         filter.addAction(Constants.ACTION_DELETE_DIARY);
@@ -72,16 +72,13 @@ public class DiaryFragment extends Fragment {
 
     public void getDiaryList() {
 
-
         diaryList = DiaryDB.getInstance(mContext).diaryDao().getAll();
-
         InsertRunnable insertRunnable = new InsertRunnable();
         Thread t = new Thread(insertRunnable);
         t.start();
     }
 
     class InsertRunnable implements Runnable {
-
 
         @Override
         public void run() {
@@ -106,7 +103,6 @@ public class DiaryFragment extends Fragment {
     }
 
     public class DiaryListUpdateReceiver extends BroadcastReceiver {
-
 
         @Override
         public void onReceive(Context context, Intent intent) {
