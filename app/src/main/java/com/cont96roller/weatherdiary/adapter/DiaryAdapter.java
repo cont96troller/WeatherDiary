@@ -31,12 +31,14 @@ import retrofit2.GsonConverterFactory;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
+//Serializable 사용 이유 파악
 public class DiaryAdapter extends RecyclerView.Adapter<DiaryAdapter.DiaryViewHolder> implements Serializable {
 
     private Context mContext;
     private ImageView mImgWeather;
     List<Diary> mDiaryList = null;
-    final private static String TAG = "pyorong";
+    //final위치 수정
+    final private static String TAG = "mkkang";
 
     public DiaryAdapter(List<Diary> mDiaryList) {
         this.mDiaryList = mDiaryList;

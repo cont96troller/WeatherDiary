@@ -2,17 +2,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.cont96roller.weatherdiary">
 
-    //인터넷권한
     <uses-permission android:name="android.permission.INTERNET" />
-    //위치권한
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
-    //위치권한
     <uses-feature android:name="android.hardware.location.gps" />
     <uses-feature android:name="android.hardware.location.network" />
 
-    //앱에대한 정보
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -21,7 +17,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.WeatherDiary.NoActionBar">
 
-        //최초실행 액티비티설정
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -34,8 +29,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        //4대컴포넌트 등록
         <service android:name=".MusicService" />
         <activity android:name=".ShowDiaryActivity" />
         <activity android:name=".WriteDiaryActivity" />

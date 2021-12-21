@@ -20,11 +20,10 @@ import com.cont96roller.weatherdiary.common.Constants;
 
 
 public class ShowDiaryActivity extends AppCompatActivity implements View.OnClickListener {
-    //버튼
+
     private Button mBtnBack;
     private ImageButton mBtnEdit;
     private ImageButton mBtnDelete;
-    //내용
     private TextView mTxtDiaryTitle;
     private TextView mTxtDiaryContents;
     private TextView mTxtTemperature;
@@ -41,13 +40,11 @@ public class ShowDiaryActivity extends AppCompatActivity implements View.OnClick
         setContentView(R.layout.activity_show_diary);
         mContext = this;
 
-        //Intent를 사용하여 데이터를 받아옴
         int diaryId = getIntent().getIntExtra(DIARY_ID_KEY, 0);
         //getInstance를 사용하여 정보 받아옴
         DiaryDB diaryDB = DiaryDB.getInstance(mContext);
         mDiaryDao = diaryDB.diaryDao();
         mDiary = mDiaryDao.getDiary(diaryId);
-
         initView();
 
     }
@@ -67,13 +64,9 @@ public class ShowDiaryActivity extends AppCompatActivity implements View.OnClick
         }
 
         mTxtWeatherStatus.setText(mDiary.getStatus());
-//        mImgWeather.setImageIcon(mDiary.getIcon());
-
-        //온도가져오기
         String tempFormat = "%1s°C / %2s°C";
         String temperature = String.format(tempFormat, mDiary.getTemp_min(), mDiary.getTemp_max());
         mTxtTemperature.setText(temperature);
-        //아이콘 가져오기
         String url = Constants.PREFIX_WEATHER_ICON_URL + mDiary.getIcon() + Constants.SUFFIX_WEATHER_ICON_URL;
         Glide.with(mContext)
                 .load(url)
@@ -83,7 +76,6 @@ public class ShowDiaryActivity extends AppCompatActivity implements View.OnClick
         mTxtDiaryContents.setText(mDiary.getContents());
         String date = String.valueOf(mDiary.getDate());
         mTxtDate.setText(String.valueOf(mDiary.getDate()));
-
         setOnClicks();
     }
 
@@ -123,5 +115,4 @@ public class ShowDiaryActivity extends AppCompatActivity implements View.OnClick
 
         }
     }
-
 }
