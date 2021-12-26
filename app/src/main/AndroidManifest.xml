@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.cont96roller.weatherdiary">
 
+<<<<<<< HEAD
 <!--    인터넷권한-->
     <uses-permission android:name="android.permission.INTERNET" />
 <!--    위치권한-->
@@ -13,6 +14,15 @@
     <uses-feature android:name="android.hardware.location.network" />
 
 <!--    앱에대한 정보-->
+=======
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <uses-feature android:name="android.hardware.location.gps" />
+    <uses-feature android:name="android.hardware.location.network" />
+
+>>>>>>> 7b9d41f3790b89bb77d768a9209fe008e41f5de9
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -21,7 +31,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.WeatherDiary.NoActionBar">
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 7b9d41f3790b89bb77d768a9209fe008e41f5de9
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -35,8 +48,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+<<<<<<< HEAD
 
 <!--        4대컴포넌트 등록-->
+=======
+>>>>>>> 7b9d41f3790b89bb77d768a9209fe008e41f5de9
         <service android:name=".MusicService" />
         <activity android:name=".ShowDiaryActivity" />
         <activity android:name=".WriteDiaryActivity" />

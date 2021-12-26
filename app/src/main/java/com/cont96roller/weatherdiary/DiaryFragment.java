@@ -23,6 +23,8 @@ import java.util.List;
 
 public class DiaryFragment extends Fragment {
 
+
+    //접근제한자 확실하게 사용(다시 공부하기)
     DiaryAdapter mAdapter;
     private Context mContext;
     private RecyclerView mRecyclerView;
@@ -66,10 +68,12 @@ public class DiaryFragment extends Fragment {
         LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
 
+        //diaryList 의미파악 어려움
         mAdapter = new DiaryAdapter(diaryList);
         mRecyclerView.setAdapter(mAdapter);
     }
 
+    //get인데 void인것이 부적절(네이밍규칙 지키기) = set사용(줄일수있으면 줄이기)
     public void getDiaryList() {
 
         diaryList = DiaryDB.getInstance(mContext).diaryDao().getAll();
@@ -85,6 +89,7 @@ public class DiaryFragment extends Fragment {
             try {
                 diaryList = DiaryDB.getInstance(mContext).diaryDao().getAll();
                 diaryAdater = new DiaryAdapter(diaryList);
+                //한번 사용하는것은 변수로 사용하지 말것
                 LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(mContext, RecyclerView.VERTICAL, false);
                 mRecyclerView.setLayoutManager(mLinearLayoutManager);
                 mRecyclerView.setAdapter(diaryAdater);
@@ -103,7 +108,7 @@ public class DiaryFragment extends Fragment {
     }
 
     public class DiaryListUpdateReceiver extends BroadcastReceiver {
-
+        //
         @Override
         public void onReceive(Context context, Intent intent) {
             String intentAction = intent.getAction();

@@ -58,18 +58,20 @@ public class WriteDiaryActivity extends AppCompatActivity implements View.OnClic
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_write_diary);
         mContext = this;
-        //각종 버튼 연결 메소드
         initView();
         Intent intent = getIntent();
-        //intent트를 통해 정보를 가져오는데 참인지 거짓인지
+
         //유지보수를 위해 작성화면으로 수정, 상세보기를 구현
         mIsEditMode = intent.getBooleanExtra("key_isEditMode", false);
+<<<<<<< HEAD
         if (mIsEditMode) {
             //오브젝트 타입을 다른액티비로 전달받기위한 SerializalbeExtra
+=======
+        if (mIsEditMode == true) {
+>>>>>>> 7b9d41f3790b89bb77d768a9209fe008e41f5de9
             mDiary = (Diary) intent.getSerializableExtra("key_diary");
             mTxtWeatherStatus.setText(mDiary.getStatus());
             String tempFormat = "%1s°C / %2s°C";
-            //
             String tempMin = String.valueOf(mDiary.getTemp_min() - 274);
             String tempMax = String.valueOf(mDiary.getTemp_max() - 274);
             String temperature = String.format(tempFormat, tempMin, tempMax);
@@ -82,13 +84,10 @@ public class WriteDiaryActivity extends AppCompatActivity implements View.OnClic
             mEditTitle.setText(mDiary.getTitle());
             mEditTextContents.setText(mDiary.getContents());
 
-
         } else {
-            //mIsEditMode에 값이 없을경후 메소드 호출
+            //mIsEditMode에 값이 없을경우 메소드 호출
             getWeatherInfo();
         }
-
-
     }
 
     private void initView() {
@@ -130,7 +129,10 @@ public class WriteDiaryActivity extends AppCompatActivity implements View.OnClic
             public void onResponse(Response<ResponseWeather> response) {
                 if (response.isSuccess()) {
 
+<<<<<<< HEAD
                     //제이슨을 파싱위해(오픈왜더맵에서 리턴값으로보내준)
+=======
+>>>>>>> 7b9d41f3790b89bb77d768a9209fe008e41f5de9
                     ResponseWeather responseWeather = response.body();
                     String main = responseWeather.getWeather().get(0).getMain();
                     String icon = responseWeather.getWeather().get(0).getIcon();
@@ -152,13 +154,11 @@ public class WriteDiaryActivity extends AppCompatActivity implements View.OnClic
                     mTxtWeatherStatus.setText(main);
                     mTxtTemperature.setText(temperature);
 
-
                     Glide.with(mContext)
                             .load(url)
                             .into(mImgWeather);
                 }
             }
-
 
             @Override
             public void onFailure(Throwable t) {
@@ -167,14 +167,12 @@ public class WriteDiaryActivity extends AppCompatActivity implements View.OnClic
         });
     }
 
-
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_back:
                 finish();
                 break;
-
         }
     }
 
@@ -188,15 +186,13 @@ public class WriteDiaryActivity extends AppCompatActivity implements View.OnClic
         finish();
     }
 
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
-//        DiaryDB.destroyInstance();
     }
 
     class InsertRunnable implements Runnable {
-
+        //DB가져오는 구조를 repository를 두고 view에서는 데이터만 가져오도록
         @Override
         public void run() {
             if (mIsEditMode == true) {
@@ -221,8 +217,6 @@ public class WriteDiaryActivity extends AppCompatActivity implements View.OnClic
 
                 DiaryDB.getInstance(mContext).diaryDao().insertAll(diary);
             }
-
         }
     }
-
 }
