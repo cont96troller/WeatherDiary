@@ -37,12 +37,8 @@ public class DiaryAdapter extends RecyclerView.Adapter<DiaryAdapter.DiaryViewHol
     private Context mContext;
     private ImageView mImgWeather;
     List<Diary> mDiaryList = null;
-<<<<<<< HEAD
-    final private static String TAG = "mk";
-=======
     //final위치 수정
     final private static String TAG = "mkkang";
->>>>>>> 7b9d41f3790b89bb77d768a9209fe008e41f5de9
 
     public DiaryAdapter(List<Diary> mDiaryList) {
         this.mDiaryList = mDiaryList;

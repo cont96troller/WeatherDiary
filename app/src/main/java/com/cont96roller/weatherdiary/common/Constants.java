@@ -9,4 +9,5 @@ public class Constants {
     public static final String DIARY_ID_KEY = "diary_id";
     public static final String ACTION_DELETE_DIARY = "com.cont96roller.weatherdiary.DELETE_DIARY";
     public static final String ACTION_EDIT_DIARY = "com.cont96roller.weatherdiary.EDIT_DIARY";
+//    public static final String KEY_
 }

@@ -110,4 +110,3 @@ public class WeatherFragment extends Fragment {
         return currentLocation;
     }
 }
-

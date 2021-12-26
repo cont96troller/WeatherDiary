@@ -63,12 +63,7 @@ public class WriteDiaryActivity extends AppCompatActivity implements View.OnClic
 
         //유지보수를 위해 작성화면으로 수정, 상세보기를 구현
         mIsEditMode = intent.getBooleanExtra("key_isEditMode", false);
-<<<<<<< HEAD
-        if (mIsEditMode) {
-            //오브젝트 타입을 다른액티비로 전달받기위한 SerializalbeExtra
-=======
         if (mIsEditMode == true) {
->>>>>>> 7b9d41f3790b89bb77d768a9209fe008e41f5de9
             mDiary = (Diary) intent.getSerializableExtra("key_diary");
             mTxtWeatherStatus.setText(mDiary.getStatus());
             String tempFormat = "%1s°C / %2s°C";
@@ -129,10 +124,6 @@ public class WriteDiaryActivity extends AppCompatActivity implements View.OnClic
             public void onResponse(Response<ResponseWeather> response) {
                 if (response.isSuccess()) {
 
-<<<<<<< HEAD
-                    //제이슨을 파싱위해(오픈왜더맵에서 리턴값으로보내준)
-=======
->>>>>>> 7b9d41f3790b89bb77d768a9209fe008e41f5de9
                     ResponseWeather responseWeather = response.body();
                     String main = responseWeather.getWeather().get(0).getMain();
                     String icon = responseWeather.getWeather().get(0).getIcon();

@@ -7,8 +7,6 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.util.Log;
-
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -21,53 +19,31 @@ import android.widget.RadioGroup;
 
 import com.cont96roller.weatherdiary.adapter.DiaryAdapter;
 import com.cont96roller.weatherdiary.databinding.ActivityMainBinding;
-import com.cont96roller.weatherdiary.interfaces.TestInterface;
-import com.cont96roller.weatherdiary.model.DiaryModel;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     //사용하지않는 변수정리
     //각종 변수 선언
-    private RadioGroup mRadioGroup;
-    private RadioButton mRadioWeather;
-    private RadioButton mRadioDiary;
     private WeatherFragment mWeatherFragment;
     private DiaryFragment mDiaryFragment;
     private FragmentManager mFragmentManager;
     private FragmentTransaction mFragmentTransaction;
-<<<<<<< HEAD
-    private Button mBtnMoveWrite;
-    private Button mButton2;
-    private View mView;
-    private Button mBtnBGM;
-=======
-//    private Button mBtnMoveWrite;
+    //    private Button mBtnMoveWrite;
 //    private Button mButton2;
 //    private View mView;
 //    private Button mBtnBGM;
->>>>>>> 7b9d41f3790b89bb77d768a9209fe008e41f5de9
     private Context mContext;
-//    private String mPersonName = "";
+    //    private String mPersonName = "";
     List<Diary> mDiaryList = null;
-<<<<<<< HEAD
-
-    List<Diary> diaryList;
-    private DiaryDB diaryDB = null;
-=======
     private DiaryDB mDiaryDB = null;
->>>>>>> 7b9d41f3790b89bb77d768a9209fe008e41f5de9
     private DiaryAdapter mDiaryAdater;
     private Button mWriteButton;
     private RecyclerView mRecyclerView;
-    private ActivityMainBinding binding;
+    private ActivityMainBinding mBinding;
+    private Thread mThreadGetDiary;
 
-<<<<<<< HEAD
-    final public static String TAG = "mk";
-=======
     final public static String TAG = "mkkang";
->>>>>>> 7b9d41f3790b89bb77d768a9209fe008e41f5de9
 
     //Activity 생명주기 최초 onCreate
     //Runnable 정리
@@ -75,88 +51,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
-//        setContentView(R.layout.activity_main);
+        mBinding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(mBinding.getRoot());
 
-<<<<<<< HEAD
-        //이어플리케이션에 정보를 담아주고
-        mWriteButton = findViewById(R.id.btn_write);
         mContext = getApplicationContext();
-        mDiaryAdater = new DiaryAdapter(mDiaryList);
+        mDiaryDB = DiaryDB.getInstance(mContext);
+        getDiaryData();
 
-        //Room 사용을 위한 DB생성
-        diaryDB = DiaryDB.getInstance(this);
-
-        //mainThread에서 DB작업을 안하려고 다른 Thread를 만듬
-        //Runnable을 상속받는 InsertPunnable 클래스 만들고
-=======
-        mContext = this;
-//        mWriteButton = findViewById(R.id.btn_write);
-        mContext = getApplicationContext();
-        mDiaryAdater = new DiaryAdapter(mDiaryList);
-        mDiaryDB = DiaryDB.getInstance(this);
-
->>>>>>> 7b9d41f3790b89bb77d768a9209fe008e41f5de9
-        class CreateRunnable implements Runnable {
-
-            @Override
-            public void run() {
-                try {
-<<<<<<< HEAD
-                    diaryList = DiaryDB.getInstance(mContext).diaryDao().getAll();
-                    mDiaryAdater = new DiaryAdapter(mDiaryList);
-                    //recyclerview를 다시 그려줌
-                    mDiaryAdater.notifyDataSetChanged();
-                    mRecyclerView.setAdapter(mDiaryAdater);
-                    //레이아웃 매니저를통해 수직정렬 정해줌
-=======
-                    mDiaryList = DiaryDB.getInstance(mContext).diaryDao().getAll();
-                    mDiaryAdater = new DiaryAdapter(mDiaryList);
-                    mDiaryAdater.notifyDataSetChanged();
-                    mRecyclerView.setAdapter(mDiaryAdater);
->>>>>>> 7b9d41f3790b89bb77d768a9209fe008e41f5de9
-                    LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(mContext, RecyclerView.VERTICAL, false);
-                    mRecyclerView.setLayoutManager(mLinearLayoutManager);
-                } catch (Exception e) {
-
-                }
-            }
-        }
-<<<<<<< HEAD
-        //insertRunnable에 InsertRunnable을 인스턴스화해서 넣어주고
-        CreateRunnable createRunnable = new CreateRunnable();
-        Thread t = new Thread(createRunnable);
-        t.start();
-
-        mWriteButton.setOnClickListener(v -> {
-            Intent intent = new Intent(getApplicationContext(), WriteDiaryActivity.class);
-            startActivity(intent);
-        });
-=======
->>>>>>> 7b9d41f3790b89bb77d768a9209fe008e41f5de9
-
-        CreateRunnable createRunnable = new CreateRunnable();
-        Thread t = new Thread(createRunnable);
-        t.start();
         //쓰레드 닫기
         //버튼 몰아서 정리
         //ViewBinding 먼저사용하기
 
-<<<<<<< HEAD
-        mBtnBGM = findViewById(R.id.btn_bgm);
-
-        mBtnBGM.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startService(new Intent(getApplicationContext(), MusicService.class));
-=======
 //        mWriteButton.setOnClickListener(v -> {
 //            Intent intent = new Intent(getApplicationContext(), WriteDiaryActivity.class);
 //            startActivity(intent);
 //        });
 
->>>>>>> 7b9d41f3790b89bb77d768a9209fe008e41f5de9
 
 //        mBtnBGM = findViewById(R.id.btn_bgm);
 //        mBtnBGM.setOnClickListener(new View.OnClickListener() {
@@ -179,35 +89,31 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        diaryList.add(new DiaryModel("바람많은", "춥다", 0L));
 
         //findViewById 사용하여 버튼 연결
-        mRadioGroup = findViewById(R.id.radio_group);
-        mRadioWeather = findViewById(R.id.radio_weather);
-        mRadioDiary = findViewById(R.id.radio_diary);
         mWeatherFragment = new WeatherFragment();
         mDiaryFragment = new DiaryFragment();
         mFragmentManager = getSupportFragmentManager();
 
         //클릭했을때 변화를 감지
-        mRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup radioGroup, int i) {
-                mFragmentTransaction = mFragmentManager.beginTransaction();
+        mBinding.radioGroup.setOnCheckedChangeListener((radioGroup, i) -> {
+            mFragmentTransaction = mFragmentManager.beginTransaction();
+            //삼항연산자 사용으로 코드 줄이기
 
-                //삼항연산자 사용으로 코드 줄이기
-                mFragmentTransaction.replace(R.id.framelayout, mDiaryFragment).commitAllowingStateLoss();
-                mFragmentTransaction.replace(R.id.framelayout, mWeatherFragment).commitAllowingStateLoss();
+            Boolean isWeather = (i == R.id.radio_weather);
+            mFragmentTransaction.replace(R.id.framelayout, isWeather ? mWeatherFragment : mDiaryFragment).commitAllowingStateLoss();
+            mBinding.radioDiary.setTypeface(null, isWeather ? Typeface.NORMAL : Typeface.BOLD);
+            mBinding.radioWeather.setTypeface(null, isWeather ? Typeface.BOLD : Typeface.NORMAL);
 
-//                if (i == R.id.radio_weather) {
-//                    mFragmentTransaction.replace(R.id.framelayout, mWeatherFragment).commitAllowingStateLoss();
-//                    mRadioDiary.setTypeface(null, Typeface.NORMAL);
-//                    mRadioWeather.setTypeface(null, Typeface.BOLD);
-//                } else if (i == R.id.radio_diary) {
-//                    mFragmentTransaction.replace(R.id.framelayout, mDiaryFragment).commitAllowingStateLoss();
-//                    mRadioDiary.setTypeface(null, Typeface.BOLD);
-//                    mRadioWeather.setTypeface(null, Typeface.NORMAL);
-//                }
-            }
+//            if (i == R.id.radio_weather) {
+//                mFragmentTransaction.replace(R.id.framelayout, mWeatherFragment).commitAllowingStateLoss();
+//                mRadioDiary.setTypeface(null, Typeface.NORMAL);
+//                mRadioWeather.setTypeface(null, Typeface.BOLD);
+//            } else if (i == R.id.radio_diary) {
+//                mFragmentTransaction.replace(R.id.framelayout, mDiaryFragment).commitAllowingStateLoss();
+//                mRadioDiary.setTypeface(null, Typeface.BOLD);
+//                mRadioWeather.setTypeface(null, Typeface.NORMAL);
+//            }
         });
-        mRadioWeather.setChecked(true);
+        mBinding.radioWeather.setChecked(true);
 //        Log.d(TAG, "onCreate");
     }
 
@@ -237,9 +143,32 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        Log.d(TAG, "onDestroy");
 //    }
 
-//    @Override
+    //    @Override
 //    public void testMkMk() {
 //    }
+    private void getDiaryData() {
+        mThreadGetDiary = new Thread(() -> {
+            try {
+                mDiaryList = mDiaryDB.diaryDao().getAll();
+                mDiaryAdater = new DiaryAdapter(mDiaryList);
+                mDiaryAdater.notifyDataSetChanged();
+                mRecyclerView.setAdapter(mDiaryAdater);
+                LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(mContext, RecyclerView.VERTICAL, false);
+                mRecyclerView.setLayoutManager(mLinearLayoutManager);
+            } catch (Exception e) {
+
+            }
+        });
+        mThreadGetDiary.start();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mThreadGetDiary.stop();
+        //deprecated
+        mThreadGetDiary.interrupt();
+    }
 
     @Override
     public void onClick(View view) {
