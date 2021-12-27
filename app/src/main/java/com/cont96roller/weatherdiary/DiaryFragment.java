@@ -63,10 +63,10 @@ public class DiaryFragment extends Fragment {
         return view;
     }
 
-    public void initView(View viewTest) {
-        RecyclerView mRecyclerView = viewTest.findViewById(R.id.recyclerview);
-        LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(getContext());
-        mRecyclerView.setLayoutManager(mLinearLayoutManager);
+    public void initView(View view) {
+        RecyclerView mRecyclerView = view.findViewById(R.id.recyclerview);
+//        LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(getContext());
+//        mRecyclerView.setLayoutManager(mLinearLayoutManager);
 
         mAdapter = new DiaryAdapter(mDiaryList);
         mRecyclerView.setAdapter(mAdapter);
@@ -81,8 +81,6 @@ public class DiaryFragment extends Fragment {
             try {
                 mDiaryList = DiaryDB.getInstance(mContext).diaryDao().getAll();
                 mDiaryAdater = new DiaryAdapter(mDiaryList);
-                LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(mContext, RecyclerView.VERTICAL, false);
-                mRecyclerView.setLayoutManager(mLinearLayoutManager);
                 mRecyclerView.setAdapter(mDiaryAdater);
             } catch (Exception e) {
                 Log.e(ERROR_LOG, e.getMessage());

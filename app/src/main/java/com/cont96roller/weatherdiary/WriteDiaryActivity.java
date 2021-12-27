@@ -56,8 +56,8 @@ public class WriteDiaryActivity extends AppCompatActivity implements View.OnClic
             mDiary = (Diary) intent.getSerializableExtra(DIARY_ID_KEY);
             mBinding.txtWeatherStatus.setText(mDiary.getStatus());
             String tempFormat = TEMP_FORMAT;
-            String tempMin = String.valueOf(mDiary.getTemp_min() - 274);
-            String tempMax = String.valueOf(mDiary.getTemp_max() - 274);
+            String tempMin = String.valueOf(mDiary.getTempMin() - 274);
+            String tempMax = String.valueOf(mDiary.getTempMax() - 274);
             String temperature = String.format(tempFormat, tempMin, tempMax);
             mBinding.txtWeatherStatus.setText(temperature);
             String url = Constants.PREFIX_WEATHER_ICON_URL + mDiary.getIcon() + Constants.SUFFIX_WEATHER_ICON_URL;
@@ -172,8 +172,8 @@ public class WriteDiaryActivity extends AppCompatActivity implements View.OnClic
                 diary.title = mBinding.editDiaryTitle.getText().toString();
                 diary.status = mWeatherStatus;
                 diary.icon = mIcon;
-                diary.temp_max = mTemp_max;
-                diary.temp_min = mTemp_min;
+                diary.tempMax = mTemp_max;
+                diary.tempMin = mTemp_min;
                 diary.date = getTime;
                 DiaryDB.getInstance(mContext).diaryDao().insertAll(diary);
             }

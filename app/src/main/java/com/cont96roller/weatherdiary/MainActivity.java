@@ -29,11 +29,7 @@ public class MainActivity extends AppCompatActivity {
     private FragmentManager mFragmentManager;
     private FragmentTransaction mFragmentTransaction;
     private Context mContext;
-    List<Diary> mDiaryList = null;
-    private DiaryDB mDiaryDB = null;
-    private DiaryAdapter mDiaryAdater;
     private ActivityMainBinding mBinding;
-    private Thread mThreadGetDiary;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,8 +38,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(mBinding.getRoot());
 
         mContext = getApplicationContext();
-        mDiaryDB = DiaryDB.getInstance(mContext);
-        getDiaryData();
 
         mBinding.btnWrite.setOnClickListener(v -> {
             Intent intent = new Intent(getApplicationContext(), WriteDiaryActivity.class);
@@ -64,27 +58,5 @@ public class MainActivity extends AppCompatActivity {
 
         });
         mBinding.radioWeather.setChecked(true);
-    }
-
-    private void getDiaryData() {
-        mThreadGetDiary = new Thread(() -> {
-            try {
-                mDiaryList = mDiaryDB.diaryDao().getAll();
-                mDiaryAdater = new DiaryAdapter(mDiaryList);
-                mDiaryAdater.notifyDataSetChanged();
-                LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(mContext, RecyclerView.VERTICAL, false);
-            } catch (Exception e) {
-
-            }
-        });
-        mThreadGetDiary.start();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        mThreadGetDiary.stop();
-        //deprecated
-        mThreadGetDiary.interrupt();
     }
 }

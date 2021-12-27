@@ -9,11 +9,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -52,7 +47,7 @@ public class ShowDiaryActivity extends AppCompatActivity implements View.OnClick
 
         mBinding.txtWeatherStatus.setText(mDiary.getStatus());
         String tempFormat = TEMP_FORMAT;
-        String temperature = String.format(tempFormat, mDiary.getTemp_min(), mDiary.getTemp_max());
+        String temperature = String.format(tempFormat, mDiary.getTempMin(), mDiary.getTempMax());
         mBinding.txtTemp.setText(temperature);
         String url = Constants.PREFIX_WEATHER_ICON_URL + mDiary.getIcon() + Constants.SUFFIX_WEATHER_ICON_URL;
         Glide.with(mContext)

@@ -45,27 +45,32 @@ public class DiaryAdapter extends RecyclerView.Adapter<DiaryAdapter.DiaryViewHol
     @NonNull
     @Override
     public DiaryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-//        mBinding = ItemDiaryBinding.inflate(LayoutInflater.from(mContext), parent, false);
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_diary, parent, false);
-        DiaryViewHolder viewHolder = new DiaryViewHolder(view);
-        return viewHolder;
+        mBinding = ItemDiaryBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+        return new DiaryViewHolder(mBinding.getRoot());
     }
 
     @Override
     public void onBindViewHolder(@NonNull DiaryViewHolder holder, int position) {
         Diary diary = mDiaryList.get(position);
-        holder.mTxtTitle.setText(diary.getTitle());
-        holder.mTxtDate.setText(String.valueOf(diary.getDate()));
-        holder.mTxtWeather.setText(diary.getStatus());
+
+
+        mBinding.title.setText(diary.getTitle());
+//        holder.mTxtTitle.setText(diary.getTitle());
+        mBinding.date.setText(String.valueOf(diary.getDate()));
+//        holder.mTxtDate.setText(String.valueOf(diary.getDate()));
+        mBinding.txtWeather.setText(diary.getStatus());
+//        holder.mTxtWeather.setText(diary.getStatus());
         String icon = diary.getIcon();
         String url = Constants.PREFIX_WEATHER_ICON_URL + icon + Constants.SUFFIX_WEATHER_ICON_URL;
-        mContext = holder.mConstList.getContext();
+        mContext = mBinding.constList.getContext();
+//        mContext = holder.mConstList.getContext();
         Glide.with(mContext)
                 .load(url)
-                .into(holder.mImgWeather);
+//                .into(holder.mImgWeather);
+                .into(mBinding.imgItemWeather);
 
-        holder.mConstList.setOnClickListener(view -> {
+//        holder.mConstList.setOnClickListener(view -> {
+        mBinding.constList.setOnClickListener(view -> {
 
             Intent intent = new Intent(mContext, ShowDiaryActivity.class);
             intent.putExtra(DIARY_ID_KEY, diary.id);
@@ -92,11 +97,11 @@ public class DiaryAdapter extends RecyclerView.Adapter<DiaryAdapter.DiaryViewHol
 
         public DiaryViewHolder(@NonNull View itemView) {
             super(itemView);
-            this.mImgWeather = itemView.findViewById(R.id.img_item_weather);
-            this.mTxtWeather = itemView.findViewById(R.id.txt_weather);
-            this.mTxtTitle = itemView.findViewById(R.id.title);
-            this.mTxtDate = itemView.findViewById(R.id.date);
-            this.mConstList = itemView.findViewById(R.id.const_list);
+//            this.mImgWeather = itemView.findViewById(R.id.img_item_weather);
+//            this.mTxtWeather = itemView.findViewById(R.id.txt_weather);
+//            this.mTxtTitle = itemView.findViewById(R.id.title);
+//            this.mTxtDate = itemView.findViewById(R.id.date);
+//            this.mConstList = itemView.findViewById(R.id.const_list);
 
         }
     }

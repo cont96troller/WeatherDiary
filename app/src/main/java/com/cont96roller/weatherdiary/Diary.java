@@ -22,10 +22,10 @@ public class Diary implements Serializable {
     public String status;
 
     @ColumnInfo(name = "temp_max")
-    public int temp_max;
+    public int tempMax;
 
     @ColumnInfo(name = "temp_min")
-    public int temp_min;
+    public int tempMin;
 
     @ColumnInfo(name = "icon")
     public String icon;
@@ -66,20 +66,20 @@ public class Diary implements Serializable {
         this.status = status;
     }
 
-    public int getTemp_max() {
-        return temp_max;
+    public int getTempMax() {
+        return tempMax;
     }
 
-    public void setTemp_max(int temp_max) {
-        this.temp_max = temp_max;
+    public void setTempMax(int tempMax) {
+        this.tempMax = tempMax;
     }
 
-    public int getTemp_min() {
-        return temp_min;
+    public int getTempMin() {
+        return tempMin;
     }
 
-    public void setTemp_min(int temp_min) {
-        this.temp_min = temp_min;
+    public void setTempMin(int tempMin) {
+        this.tempMin = tempMin;
     }
 
     public String getIcon() {
