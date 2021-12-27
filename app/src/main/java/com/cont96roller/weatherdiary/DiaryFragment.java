@@ -1,5 +1,9 @@
 package com.cont96roller.weatherdiary;
 
+import static com.cont96roller.weatherdiary.common.Constants.ACTION_DETAILED_DIARY;
+import static com.cont96roller.weatherdiary.common.Constants.DETAILED_KEY;
+import static com.cont96roller.weatherdiary.common.Constants.ERROR_LOG;
+
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -23,37 +27,33 @@ import java.util.List;
 
 public class DiaryFragment extends Fragment {
 
-
-    //접근제한자 확실하게 사용(다시 공부하기)
-    DiaryAdapter mAdapter;
+    private DiaryAdapter mAdapter;
     private Context mContext;
     private RecyclerView mRecyclerView;
-    private DiaryDB diaryDB = null;
-    List<Diary> diaryList;
-    private DiaryAdapter diaryAdater;
+    private DiaryDB mDiaryDB = null;
+    List<Diary> mDiaryList;
+    private DiaryAdapter mDiaryAdater;
     private DiaryListUpdateReceiver mReceiver;
+    private Thread mThreadGetDiary;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mContext = getContext();
-        diaryDB = DiaryDB.getInstance(mContext);
+        mDiaryDB = DiaryDB.getInstance(mContext);
+        getDiaryData();
         View view = inflater.inflate(R.layout.fragment_diary, container, false);
 
         mRecyclerView = view.findViewById(R.id.recyclerview);
-        mRecyclerView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(mContext, WriteDiaryActivity.class);
-                intent.putExtra("key2", "일기조회하기");
-                startActivity(intent);
-            }
+        mRecyclerView.setOnClickListener(view1 -> {
+            Intent intent = new Intent(mContext, WriteDiaryActivity.class);
+            intent.putExtra(DETAILED_KEY, ACTION_DETAILED_DIARY);
+            startActivity(intent);
         });
 
-        getDiaryList();
+        setDiaryList();
         initView(view);
 
-        //Receiver로 정보를 받아서 최신화시켜준다.
         mReceiver = new DiaryListUpdateReceiver();
         IntentFilter filter = new IntentFilter();
         filter.addAction(Constants.ACTION_DELETE_DIARY);
@@ -68,35 +68,27 @@ public class DiaryFragment extends Fragment {
         LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
 
-        //diaryList 의미파악 어려움
-        mAdapter = new DiaryAdapter(diaryList);
+        mAdapter = new DiaryAdapter(mDiaryList);
         mRecyclerView.setAdapter(mAdapter);
     }
 
-    //get인데 void인것이 부적절(네이밍규칙 지키기) = set사용(줄일수있으면 줄이기)
-    public void getDiaryList() {
-
-        diaryList = DiaryDB.getInstance(mContext).diaryDao().getAll();
-        GetDiaryListRunnable getDiaryListRunnable = new GetDiaryListRunnable();
-        Thread t = new Thread(getDiaryListRunnable);
-        t.start();
+    public void setDiaryList() {
+        mDiaryList = DiaryDB.getInstance(mContext).diaryDao().getAll();
     }
-    //이게 정석
-    class GetDiaryListRunnable implements Runnable {
 
-        @Override
-        public void run() {
+    private void getDiaryData() {
+        mThreadGetDiary = new Thread(() -> {
             try {
-                diaryList = DiaryDB.getInstance(mContext).diaryDao().getAll();
-                diaryAdater = new DiaryAdapter(diaryList);
-                //한번 사용하는것은 변수로 사용하지 말것
+                mDiaryList = DiaryDB.getInstance(mContext).diaryDao().getAll();
+                mDiaryAdater = new DiaryAdapter(mDiaryList);
                 LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(mContext, RecyclerView.VERTICAL, false);
                 mRecyclerView.setLayoutManager(mLinearLayoutManager);
-                mRecyclerView.setAdapter(diaryAdater);
+                mRecyclerView.setAdapter(mDiaryAdater);
             } catch (Exception e) {
-                Log.e("error", e.getMessage());
+                Log.e(ERROR_LOG, e.getMessage());
             }
-        }
+        });
+        mThreadGetDiary.start();
     }
 
     @Override
@@ -105,10 +97,12 @@ public class DiaryFragment extends Fragment {
         if (mReceiver != null) {
             getActivity().unregisterReceiver(mReceiver);
         }
+        //deprecated
+//        mThreadGetDiary.stop();
+        mThreadGetDiary.interrupt();
     }
 
     public class DiaryListUpdateReceiver extends BroadcastReceiver {
-        //
         @Override
         public void onReceive(Context context, Intent intent) {
             String intentAction = intent.getAction();
@@ -116,9 +110,8 @@ public class DiaryFragment extends Fragment {
                 switch (intentAction) {
                     case Constants.ACTION_DELETE_DIARY:
                     case Constants.ACTION_EDIT_DIARY:
-                        getDiaryList();
+                        setDiaryList();
                         break;
-
                 }
             }
         }

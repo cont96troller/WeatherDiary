@@ -1,6 +1,9 @@
 package com.cont96roller.weatherdiary;
 
+import static com.cont96roller.weatherdiary.common.Constants.DIARY_DEY;
 import static com.cont96roller.weatherdiary.common.Constants.DIARY_ID_KEY;
+import static com.cont96roller.weatherdiary.common.Constants.ISEDITMODE_KEY;
+import static com.cont96roller.weatherdiary.common.Constants.TEMP_FORMAT;
 
 import android.content.Context;
 import android.content.Intent;
@@ -17,31 +20,24 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.cont96roller.weatherdiary.common.Constants;
+import com.cont96roller.weatherdiary.databinding.ActivityShowDiaryBinding;
 
 
 public class ShowDiaryActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private Button mBtnBack;
-    private ImageButton mBtnEdit;
-    private ImageButton mBtnDelete;
-    private TextView mTxtDiaryTitle;
-    private TextView mTxtDiaryContents;
-    private TextView mTxtTemperature;
-    private ImageView mImgWeather;
-    private TextView mTxtWeatherStatus;
     private Context mContext;
     private DiaryDao mDiaryDao;
     private Diary mDiary;
-    private TextView mTxtDate;
+    private ActivityShowDiaryBinding mBinding;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_show_diary);
+        mBinding = ActivityShowDiaryBinding.inflate(getLayoutInflater());
+        setContentView(mBinding.getRoot());
         mContext = this;
-
         int diaryId = getIntent().getIntExtra(DIARY_ID_KEY, 0);
-        //getInstance를 사용하여 정보 받아옴
         DiaryDB diaryDB = DiaryDB.getInstance(mContext);
         mDiaryDao = diaryDB.diaryDao();
         mDiary = mDiaryDao.getDiary(diaryId);
@@ -50,39 +46,30 @@ public class ShowDiaryActivity extends AppCompatActivity implements View.OnClick
     }
 
     private void initView() {
-        mTxtDate = findViewById(R.id.txt_date);
-        mBtnBack = findViewById(R.id.btn_back);
-        mBtnEdit = findViewById(R.id.img_btn_edit);
-        mBtnDelete = findViewById(R.id.img_btn_delete);
-        mTxtDiaryTitle = findViewById(R.id.txt_diary_title);
-        mTxtDiaryContents = findViewById(R.id.txt_diary_contents);
-        mTxtWeatherStatus = findViewById(R.id.txt_weather_status);
-        mImgWeather = findViewById(R.id.img_weather);
-        mTxtTemperature = findViewById(R.id.txt_temp);
         if (mDiary == null) {
             return;
         }
 
-        mTxtWeatherStatus.setText(mDiary.getStatus());
-        String tempFormat = "%1s°C / %2s°C";
+        mBinding.txtWeatherStatus.setText(mDiary.getStatus());
+        String tempFormat = TEMP_FORMAT;
         String temperature = String.format(tempFormat, mDiary.getTemp_min(), mDiary.getTemp_max());
-        mTxtTemperature.setText(temperature);
+        mBinding.txtTemp.setText(temperature);
         String url = Constants.PREFIX_WEATHER_ICON_URL + mDiary.getIcon() + Constants.SUFFIX_WEATHER_ICON_URL;
         Glide.with(mContext)
                 .load(url)
-                .into(mImgWeather);
+                .into(mBinding.imgWeather);
 
-        mTxtDiaryTitle.setText(mDiary.getTitle());
-        mTxtDiaryContents.setText(mDiary.getContents());
+        mBinding.txtDiaryTitle.setText(mDiary.getTitle());
+        mBinding.txtDiaryContents.setText(mDiary.getContents());
         String date = String.valueOf(mDiary.getDate());
-        mTxtDate.setText(String.valueOf(mDiary.getDate()));
+        mBinding.txtDate.setText(String.valueOf(mDiary.getDate()));
         setOnClicks();
     }
 
     private void setOnClicks() {
-        mBtnBack.setOnClickListener(this);
-        mBtnEdit.setOnClickListener(this);
-        mBtnDelete.setOnClickListener(this);
+        mBinding.btnBack.setOnClickListener(this);
+        mBinding.imgBtnEdit.setOnClickListener(this);
+        mBinding.imgBtnDelete.setOnClickListener(this);
     }
 
     @Override
@@ -96,8 +83,8 @@ public class ShowDiaryActivity extends AppCompatActivity implements View.OnClick
             case R.id.img_btn_edit:
                 Intent intent = new Intent(mContext, WriteDiaryActivity.class);
                 boolean isEditMode = true;
-                intent.putExtra("key_isEditMode", isEditMode);
-                intent.putExtra("key_diary", mDiary);
+                intent.putExtra(ISEDITMODE_KEY, isEditMode);
+                intent.putExtra(DIARY_DEY, mDiary);
                 startActivity(intent);
                 finish();
                 break;
@@ -107,7 +94,7 @@ public class ShowDiaryActivity extends AppCompatActivity implements View.OnClick
                 broadcastIntent.setAction(Constants.ACTION_DELETE_DIARY);
                 sendBroadcast(broadcastIntent);
 
-                Diary diary = new Diary();
+//                Diary diary = new Diary();
                 int diaryId = getIntent().getIntExtra(DIARY_ID_KEY, 0);
                 mDiaryDao.deleteByDiaryId(diaryId);
                 finish();

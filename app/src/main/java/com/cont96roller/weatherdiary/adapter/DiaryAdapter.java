@@ -19,6 +19,7 @@ import com.cont96roller.weatherdiary.Diary;
 import com.cont96roller.weatherdiary.R;
 import com.cont96roller.weatherdiary.ShowDiaryActivity;
 import com.cont96roller.weatherdiary.common.Constants;
+import com.cont96roller.weatherdiary.databinding.ItemDiaryBinding;
 import com.cont96roller.weatherdiary.model.ApiInterface;
 import com.cont96roller.weatherdiary.model.ResponseWeather;
 
@@ -31,14 +32,11 @@ import retrofit2.GsonConverterFactory;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-//Serializable 사용 이유 파악
-public class DiaryAdapter extends RecyclerView.Adapter<DiaryAdapter.DiaryViewHolder> implements Serializable {
+public class DiaryAdapter extends RecyclerView.Adapter<DiaryAdapter.DiaryViewHolder> {
 
     private Context mContext;
-    private ImageView mImgWeather;
+    private ItemDiaryBinding mBinding;
     List<Diary> mDiaryList = null;
-    //final위치 수정
-    final private static String TAG = "mkkang";
 
     public DiaryAdapter(List<Diary> mDiaryList) {
         this.mDiaryList = mDiaryList;
@@ -47,18 +45,15 @@ public class DiaryAdapter extends RecyclerView.Adapter<DiaryAdapter.DiaryViewHol
     @NonNull
     @Override
     public DiaryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        //RecyclerView의 아이템 xml 파일로 무엇을 사용할지 선언
+//        mBinding = ItemDiaryBinding.inflate(LayoutInflater.from(mContext), parent, false);
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_diary, parent, false);
-
         DiaryViewHolder viewHolder = new DiaryViewHolder(view);
-
         return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull DiaryViewHolder holder, int position) {
-        //Item이 하나씩 그려질 때 마다 호출됨
         Diary diary = mDiaryList.get(position);
         holder.mTxtTitle.setText(diary.getTitle());
         holder.mTxtDate.setText(String.valueOf(diary.getDate()));
@@ -70,18 +65,15 @@ public class DiaryAdapter extends RecyclerView.Adapter<DiaryAdapter.DiaryViewHol
                 .load(url)
                 .into(holder.mImgWeather);
 
-        holder.mConstList.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        holder.mConstList.setOnClickListener(view -> {
 
-                Intent intent = new Intent(mContext, ShowDiaryActivity.class);
-                intent.putExtra(DIARY_ID_KEY, diary.id);
+            Intent intent = new Intent(mContext, ShowDiaryActivity.class);
+            intent.putExtra(DIARY_ID_KEY, diary.id);
 
-                mContext.startActivity(intent);
+            mContext.startActivity(intent);
 
-                switch (view.getId()) {
+            switch (view.getId()) {
 
-                }
             }
         });
     }
@@ -108,30 +100,4 @@ public class DiaryAdapter extends RecyclerView.Adapter<DiaryAdapter.DiaryViewHol
 
         }
     }
-
-    //사용하지 않았음
-    private void getWeatherinfo() {
-        String lat = "37.65171906925866";
-        String lot = "127.07728375544342";
-
-        Retrofit client = new Retrofit.Builder().baseUrl(Constants.WEATHER_BASE_URL).addConverterFactory(GsonConverterFactory.create()).build();
-
-        ApiInterface service = client.create(ApiInterface.class);
-        Call<ResponseWeather> call = service.requestWeather(Constants.API_APP_KEY, Double.valueOf(lat), Double.valueOf(lot));
-
-        call.enqueue(new Callback<ResponseWeather>() {
-            @Override
-            public void onResponse(Response<ResponseWeather> response) {
-                if (response.isSuccess()) {
-
-                }
-            }
-
-            @Override
-            public void onFailure(Throwable t) {
-
-            }
-        });
-    }
-
 }

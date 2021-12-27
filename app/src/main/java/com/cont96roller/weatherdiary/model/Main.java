@@ -2,11 +2,11 @@ package com.cont96roller.weatherdiary.model;
 
 //get set 만들어줬다
 public class Main {
-    Double temp;
-    Integer pressure;
-    Integer humidity;
-    Double temp_min;
-    Double temp_max;
+    private Double temp;
+    private Integer pressure;
+    private Integer humidity;
+    private Double temp_min;
+    private Double temp_max;
 
 
     public Double getTemp() {
